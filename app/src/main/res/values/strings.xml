@@ -10,4 +10,8 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="nombre_app">ZTORE ME</string>
+    <string name="seccion1">Inventario</string>
+    <string name="seccion2">Agregar producto</string>
+    <string name="seccion3">Generar Reporte</string>
+    <string name="seccion4">Seguimiento</string>
 </resources>

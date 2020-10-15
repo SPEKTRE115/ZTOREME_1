@@ -4,17 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     tools:context=".FirstFragment">
 
-    <ListView
-        android:id="@+id/lista_menu"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borde"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/imagen_inventario"
+                android:layout_width="102dp"
+                android:layout_height="116dp"
+                android:layout_weight="40"
+                android:src="@drawable/logo_ztore" />
+
+            <TextView
+                android:id="@+id/seccion1"
+                android:layout_width="293dp"
+                android:layout_height="130dp"
+                android:clickable="true"
+                android:gravity="center_horizontal|center_vertical"
+                android:shadowColor="#777474"
+                android:text="@string/seccion1"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/design_default_color_on_secondary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="134dp"
+            android:background="@drawable/borde"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/agregar_azul" />
+
+            <TextView
+                android:id="@+id/seccion2"
+                android:layout_width="293dp"
+                android:layout_height="130dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:shadowColor="#959292"
+                android:text="@string/seccion2"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/design_default_color_on_secondary"
+                android:textColorHint="@color/design_default_color_background" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
