@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data
+        android:layout_width="96dp"
+        android:layout_height="90dp">
+    </data>
+
+    <ListView
+        android:id="@+id/lista_articulos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+</layout>

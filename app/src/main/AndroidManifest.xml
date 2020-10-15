@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/logo_ztore"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MisProductos"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/nombre_app"
