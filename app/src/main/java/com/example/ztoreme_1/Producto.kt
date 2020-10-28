@@ -13,7 +13,7 @@ class Producto {
     var precioVenta : Int = 0
 
     constructor(nombreProducto : String, imagen : String, descripcion : String, cantidadActual : Int,
-        stockMinimo : Int, stockMaximo : Int, precioCompra : Int, precioVenta : Int){
+                stockMinimo : Int, stockMaximo : Int, precioCompra : Int, precioVenta : Int){
         this.nombreProducto = nombreProducto
         this.imagen = imagen
         this.descripcion = descripcion
@@ -22,6 +22,10 @@ class Producto {
         this.stockMaximo = stockMaximo
         this.precioCompra = precioCompra
         this.precioVenta = precioVenta
+    }
+
+    constructor(nombreProducto: String){
+        this.nombreProducto = nombreProducto
     }
 
     constructor(){}

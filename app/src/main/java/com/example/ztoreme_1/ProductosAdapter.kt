@@ -13,9 +13,9 @@ class ProductosAdapter(private val mContex: Context, private val listaProductos:
 
         val producto = listaProductos[position]
 
-        layout.nameProduct.text = producto.nombre
-        layout.precio.text  = "$${producto.precio}"
-        layout.stock.text = producto.stock.toString()
+        layout.nameProduct.text = producto.nombreProducto
+        layout.precio.text  = "$${producto.precioVenta}"
+        layout.stock.text = producto.cantidadActual.toString()
 
         return layout
     }

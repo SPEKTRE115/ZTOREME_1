@@ -1,11 +1,14 @@
 package com.example.ztoreme_1
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +18,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        val click_1 = findViewById(R.id.seccion1) as TextView
+        click_1.setOnClickListener {
+            val intento1 = Intent(this, MisProductos::class.java)
+            startActivity(intento1)
+        }
+
+        val click_1_1 = findViewById(R.id.imagen_inventario) as ImageView
+        click_1_1.setOnClickListener {
+            val intento1 = Intent(this, MisProductos::class.java)
+            startActivity(intento1)
+        }
+
+        val click_2 = findViewById(R.id.seccion2) as TextView
+        click_2.setOnClickListener {
+            val intento1 = Intent(this, ActivityAgregar::class.java)
+            startActivity(intento1)
+        }
+
+        val click_2_1 = findViewById(R.id.imagen_agregar) as ImageView
+        click_2_1.setOnClickListener {
+            val intento1 = Intent(this, ActivityAgregar::class.java)
+            startActivity(intento1)
+        }
 
     }
 

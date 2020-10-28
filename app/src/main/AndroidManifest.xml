@@ -5,11 +5,17 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo_ztore"
-        android:label="@string/app_name"
+        android:label="ZTORE ME"
         android:roundIcon="@mipmap/logo_ztore"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MisProductos"></activity>
+        <activity android:name=".MisProductos"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
+        <activity android:name=".ActivityAgregar"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/nombre_app"

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/logo_agregar_ztorem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FDFCFC"
@@ -9,37 +10,62 @@
     tools:visibility="visible">
 
 
-    <EditText
-        android:id="@+id/editprecioVenta"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/editprecioCompra" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@mipmap/ic_launcher_foreground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/atras_agregar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar2"
+                    android:layout_width="219dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:gravity="fill_horizontal|center_vertical"
+                    android:visibility="visible"
+                    app:popupTheme="@style/AppTheme.NoActionBar"
+                    app:title="Agregar Producto"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/logo_ztore" />
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="78dp"
         android:text="Nombre del producto"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton4"
+        app:layout_constraintTop_toTopOf="parent"
         tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
@@ -115,6 +141,20 @@
         tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <EditText
+        android:id="@+id/editTextProd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:focusable="auto"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
         android:id="@+id/editprecioCompra"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
@@ -122,6 +162,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
         android:ems="10"
+        android:focusable="true"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView5"
@@ -132,25 +173,28 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
+        android:focusable="true"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/editprecioVenta" />
 
     <EditText
-        android:id="@+id/editTextProd"
-        android:layout_width="0dp"
+        android:id="@+id/editprecioVenta"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="36dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:focusable="true"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/editprecioCompra" />
 
     <EditText
         android:id="@+id/editNumCantidad"
@@ -160,6 +204,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="80dp"
         android:ems="10"
+        android:focusable="true"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/editstockMax"
         app:layout_constraintEnd_toEndOf="parent"
@@ -175,6 +220,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="36dp"
         android:ems="10"
+        android:focusable="true"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/editstockMin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -185,10 +231,11 @@
         android:id="@+id/editstockMin"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
         android:ems="10"
+        android:focusable="true"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
@@ -199,7 +246,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="31dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#14EC37"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -209,22 +256,13 @@
         android:id="@+id/BtnCancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
+        android:layout_marginStart="31dp"
         android:layout_marginEnd="168dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#E60707"
         android:text="Cancelar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/BtnGuardar"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="80dp"
-        android:layout_height="70dp"
-        android:backgroundTint="#FFFFFF"
-        android:src="@drawable/ic_baseline_chevron_left_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

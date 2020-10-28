@@ -10,11 +10,15 @@ class MisProductos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mis_productos)
 
-        val producto = Producto("camara",1580.00, "Camara ultimo modelo", R.drawable.camara, 28)
-        val producto2 = Producto("PC",32500.00,"16 GB RAM",R.drawable.computadora,9)
+        val context = this
+        var db = DataBaseHandler(context)
+        var datos = db.extraerProductos()
+        val listaProduct : MutableList<Producto> = ArrayList()
 
-        val listaProduct = listOf(producto,producto2)
-
+        for (i in datos){
+            val producto = Producto(i.nombreProducto,R.drawable.camara.toString(), i.descripcion,i.cantidadActual,5,45,4600,i.precioVenta)
+            listaProduct.add(producto)
+        }
         val adapter = ProductosAdapter(this, listaProduct)
 
         lista_articulos.adapter = adapter

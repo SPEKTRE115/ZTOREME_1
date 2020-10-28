@@ -19,18 +19,31 @@ private const val tablaProductos = "CREATE TABLE IF NOT EXISTS PRODUCTOS  (" +
         "PRECIO_COMPRA INTEGER," +
         "PRECIO_VENTA INTEGER);"
 
+private const val relacionProductosCategoria = "CREATE TABLE IF NOT EXISTS CATEGORIAS_PRODUCTOS(" +
+        "ID_PRODUCTO INTEGER," +
+        "ID_CATEGORIA INTEGER," +
+        "CONSTRAINT fk_producto FOREIGN KEY (ID_PRODUCTO) REFERENCES PRODUCTOS(ID_PRODUCTO)," +
+        "CONSTRAINT fk_categoria FOREIGN KEY (ID_CATEGORIA) REFERENCES CATEGORIAS(ID_CATEGORIA));"
+
+private const val tablaCategorias = "CREATE TABLE IF NOT EXISTS CATEGORIAS(" +
+        "ID_CATEGORIA INTEGER PRIMARY KEY AUTOINCREMENT," +
+        "NOMBRE TEXT);"
+
+
 private const val tablaMovimientos = "CREATE TABLE IF NOT EXISTS MOVIMIENTOS (" +
         "FECHA_REGISTRO TEXT," +
         "ID_PRODUCTO INTEGER," +
         "CANTIDAD_MOV INTEGER," +
         "ENTRADA INTEGER," +
         "FOREIGN KEY(ID_PRODUCTO) REFERENCES PRODUCTOS(ID_PRODUCTO)" +
-        "PRIMARY_KEY(FECHA_REGISTRO, ID_PRODUCTO)"
+        "PRIMARY KEY(FECHA_REGISTRO, ID_PRODUCTO));"
 
 class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(tablaProductos)
         db?.execSQL(tablaMovimientos)
+        db?.execSQL(tablaCategorias)
+        db?.execSQL(relacionProductosCategoria)
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -49,6 +62,13 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         cv.put("PRECIO_COMPRA", producto.precioCompra)
         cv.put("PRECIO_VENTA", producto.precioVenta)
         var result = db.insert("PRODUCTOS",null, cv)
+    }
+
+    fun insertarCategoria(categoria : Categoria){
+        val db = this.writableDatabase
+        var cv = ContentValues()
+        cv.put("NOMBRE", categoria.nombreCategoria)
+        var result = db.insert("CATEGORIAS",null,cv)
     }
 
     fun insertarMovimiento(movimiento : Movimiento){
@@ -72,7 +92,6 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
                 var producto = Producto()
                 producto.idProducto = result.getString(result.getColumnIndex("ID_PRODUCTO")).toInt()
                 producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
-                producto.imagen = result.getString(result.getColumnIndex("IMAGEN")).toString()
                 producto.descripcion = result.getString(result.getColumnIndex("DESCRIPCION")).toString()
                 producto.cantidadActual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
                 producto.stockMinimo = result.getString(result.getColumnIndex("STOCK_MINIMO")).toInt()
@@ -87,5 +106,41 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    fun extraerCategorias() : MutableList<Categoria>{
+        var lista : MutableList<Categoria> = ArrayList()
+
+        val db = this.readableDatabase
+        val query = "SELECT * FROM CATEGORIAS"
+        val result = db.rawQuery(query, null)
+        if(result.moveToFirst()){
+            do {
+                var categoria = Categoria()
+                categoria.idCategoria = result.getString(result.getColumnIndex("ID_CATEGORIA")).toInt()
+                categoria.nombreCategoria = result.getString(result.getColumnIndex("NOMBRE")).toString()
+                lista.add(categoria)
+            } while(result.moveToNext())
+        }
+        result.close()
+        db.close()
+        return lista
+    }
+
+    fun extraeNom() : MutableList<Producto>{
+        var lista : MutableList<Producto> = ArrayList()
+
+        val db = this.readableDatabase
+        val query = "SELECT * FROM PRODUCTOS"
+        val result = db.rawQuery(query, null)
+        if(result.moveToFirst()){
+            do {
+                var producto = Producto()
+                producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
+                lista.add(producto)
+            } while (result.moveToNext())
+        }
+        result.close()
+        db.close()
+        return lista
+    }
 
 }
