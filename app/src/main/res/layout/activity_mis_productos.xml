@@ -32,7 +32,7 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="103dp"
+                android:layout_width="108dp"
                 android:layout_height="match_parent"
                 android:background="#FFFFFF"
                 app:srcCompat="@drawable/logo_ztore" />

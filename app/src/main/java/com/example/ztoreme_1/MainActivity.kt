@@ -41,6 +41,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(intento1)
         }
 
+        val click_3 = findViewById(R.id.seccion3) as TextView
+        click_3.setOnClickListener {
+            val intento1 = Intent(this, ActivityAgregarCategoria::class.java)
+            startActivity(intento1)
+        }
+
+        val click_3_1 = findViewById(R.id.imagen_categoria) as ImageView
+        click_3_1.setOnClickListener {
+            val intento1 = Intent(this, ActivityAgregarCategoria::class.java)
+            startActivity(intento1)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

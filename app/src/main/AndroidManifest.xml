@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ztoreme_1">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,13 +13,16 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".productos.DetalleProducto"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".productos.MisProductos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".productos.ActivityAgregar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ActivityAgregarCategoria"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/nombre_app"

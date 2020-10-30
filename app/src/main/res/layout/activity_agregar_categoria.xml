@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityAgregarCategoria">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar2"
+                    android:layout_width="308dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:textAlignment="center"
+                    android:visibility="visible"
+                    app:popupTheme="@style/AppTheme.NoActionBar"
+                    app:title="Agregar Categoría"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    app:srcCompat="@drawable/logo_ztore" />
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:orientation="horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="113dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/text_categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_weight="1"
+                android:text="Nombre de la categoría:"
+                android:textColor="#040404"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edit_nom_categoria"
+                android:layout_width="179dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="101dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#E60707"
+                android:text="Cancelar"
+                android:textColor="#040404"
+                android:textColorHint="#E60505" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#60F802"
+                android:text="Guardar" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

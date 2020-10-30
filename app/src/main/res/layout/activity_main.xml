@@ -36,48 +36,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:orientation="horizontal"
-            ></LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mis categorias"
-            android:textColor="#000"
-            android:textSize="20dp"
-            android:layout_marginLeft="15dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"/>
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/style_border_edit_text"
-            android:backgroundTint="#54D2D2"
-            android:gravity="center_horizontal|center_vertical"
-            android:textSize="20dp"
-            android:text="Aretes"
-            android:textColor="#fff"
-
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mi empresa"
-            android:layout_marginLeft="20dp"
-            android:textColor="#000"
-            android:textSize="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
+            android:layout_height="87dp"
+            android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="175dp"
             android:orientation="horizontal"
 
             >
@@ -85,19 +49,18 @@
             <LinearLayout
                 android:layout_width="180dp"
                 android:layout_height="150dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:background="@drawable/style_border_edit_text"
                 android:layout_marginLeft="15dp"
-                android:orientation="vertical"
-                android:backgroundTint="#5BC0EB">
+                android:background="@drawable/style_border_edit_text"
+                android:backgroundTint="#5BC0EB"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/imagen_inventario"
                     android:layout_width="61dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/logo_ztore"
-                    />
+                    app:srcCompat="@drawable/logo_ztore" />
 
                 <TextView
                     android:id="@+id/seccion1"
@@ -115,9 +78,9 @@
                 android:layout_height="150dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/style_border_edit_text"
+                android:backgroundTint="#BFF34B"
                 android:gravity="center_horizontal|center_vertical"
-                android:orientation="vertical"
-                android:backgroundTint="#BFF34B">
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/imagen_agregar"
@@ -134,8 +97,40 @@
                     android:gravity="center_horizontal|center_vertical"
                     android:text="Agregar Producto"
                     android:textColor="#fff"
-                    android:textSize="25dp"
-                    />
+                    android:textSize="25dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/style_border_edit_text"
+                android:backgroundTint="#673AB7"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imagen_categoria"
+                    android:layout_width="61dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/categorias" />
+
+                <TextView
+                    android:id="@+id/seccion3"
+                    android:layout_width="300dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="Categoría"
+                    android:textColor="#fff"
+                    android:textSize="25dp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

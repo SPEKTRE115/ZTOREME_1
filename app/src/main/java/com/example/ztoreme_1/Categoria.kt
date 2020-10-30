@@ -1,6 +1,8 @@
 package com.example.ztoreme_1
 
-class Categoria {
+import java.io.Serializable
+
+class Categoria : Serializable {
 
     var idCategoria : Int = 0
     var nombreCategoria : String = ""

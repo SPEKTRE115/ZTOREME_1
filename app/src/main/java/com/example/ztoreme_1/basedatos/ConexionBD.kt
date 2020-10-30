@@ -119,6 +119,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+
+
+
     fun borrarProducto(nombre : String){
         val db = this.writableDatabase
         //db.execSQL("DELETE FROM PRODUCTOS WHERE NOMBRE="+nombre)
