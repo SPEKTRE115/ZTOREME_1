@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/logo_agregar_ztorem"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFCFC"
+    tools:context=".productos.DetalleProducto"
+    tools:visibility="visible">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.NoActionBar">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/atras_agregar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar2"
+                        android:layout_width="219dp"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:gravity="fill_horizontal|center_vertical"
+                        android:visibility="visible"
+                        app:popupTheme="@style/AppTheme.NoActionBar"
+                        app:title="Mi producto"
+                        tools:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/logo"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/logo_ztore" />
+                </LinearLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="151dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/nombre_producto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Nombre producto"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/etiqueta_stock_actual"
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:text="Stock actual"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/stock_actual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/etiqueta_stock_actual"
+                    android:layout_toEndOf="@+id/etiqueta_stock_actual"
+                    android:text="75"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/etiqueta_stock_maximo"
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/etiqueta_stock_actual"
+                    android:layout_marginBottom="-32dp"
+                    android:text="Stock maximo"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/stock_maximo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/etiqueta_stock_maximo"
+                    android:layout_toEndOf="@+id/etiqueta_stock_maximo"
+                    android:text="100"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/etiqueta_stock_minimo"
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/etiqueta_stock_maximo"
+                    android:layout_marginBottom="-32dp"
+                    android:text="Stock maximo"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/stock_minimo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/etiqueta_stock_minimo"
+                    android:layout_toEndOf="@+id/etiqueta_stock_minimo"
+                    android:text="5"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/etiqueta_descripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/etiqueta_stock_minimo"
+                    android:layout_marginTop="32dp"
+                    android:paddingLeft="20dp"
+                    android:text="Descripción"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/descripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/etiqueta_descripcion"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/style_border_info_product"
+                    android:paddingLeft="20dp"
+                    android:text="Cocacola con mas azucar"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/etiqueta_precio_venta"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/descripcion"
+                    android:layout_marginTop="32dp"
+                    android:paddingLeft="16dp"
+                    android:text="Precio venta:"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/etiqueta_precio_compra"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/descripcion"
+                    android:layout_marginTop="32dp"
+                    android:layout_toEndOf="@+id/etiqueta_precio_venta"
+                    android:paddingLeft="16dp"
+                    android:text="Precio compra:"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/precio_venta"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/etiqueta_precio_venta"
+                    android:layout_marginTop="32dp"
+                    android:paddingLeft="16dp"
+                    android:text="$500.00"
+                    android:textColor="#000"></TextView>
+
+                <TextView
+                    android:id="@+id/precio_compra"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/etiqueta_precio_compra"
+                    android:layout_marginTop="32dp"
+                    android:layout_toEndOf="@+id/precio_venta"
+                    android:paddingLeft="16dp"
+                    android:text="$250.00"
+                    android:textColor="#000"></TextView>
+
+                <EditText
+                    android:id="@+id/cantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/etiqueta_precio_compra"
+                    android:layout_marginTop="78dp"
+                    android:hint="Cantidad"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/btn_agregar"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/cantidad"
+                    android:layout_marginTop="78dp"
+                    android:background="@drawable/style_cant_product"
+                    android:backgroundTint="#28df99"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Agregar"
+                    android:textColor="#ffffff"></TextView>
+
+                <TextView
+                    android:id="@+id/btn_borrar"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/cantidad"
+                    android:layout_marginStart="66dp"
+                    android:layout_marginTop="80dp"
+                    android:layout_toEndOf="@+id/btn_agregar"
+                    android:background="@drawable/style_cant_product"
+                    android:backgroundTint="#f05454"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Borrar"
+                    android:textColor="#ffffff"></TextView>
+
+                <TextView
+                    android:id="@+id/btn_editar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/btn_agregar"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/style_cant_product"
+                    android:backgroundTint="#14274e"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Editar mi producto"
+                    android:textColor="#ffffff"></TextView>
+
+                <TextView
+                    android:id="@+id/btn_borrar_producto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/btn_editar"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/style_cant_product"
+                    android:backgroundTint="#f05454"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Eliminar este producto"
+                    android:textColor="#ffffff"></TextView>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
