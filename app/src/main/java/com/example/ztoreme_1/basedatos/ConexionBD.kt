@@ -69,10 +69,16 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         val db = this.writableDatabase
         val db2 = this.readableDatabase
         var cv = ContentValues()
-        val resultado1 = db2.rawQuery("SELECT ID_PRODUCTO FROM PRODUCTOS WHERE NAME = ?", Array<String>(1) {nombreP})
-        val resultado2 = db2.rawQuery("SELECT ID_CATEGORIA FROM CATEGORIAS WHERE NAME = ?", Array<String>(1) {nombreC})
-        cv.put("ID_PRODUCTO", resultado1.toString())
-        cv.put("ID_CATEGORIA", resultado2.toString())
+        val query1 = "SELECT * FROM PRODUCTOS WHERE NOMBRE = '"+nombreP+"'"
+        val query2 = "SELECT * FROM CATEGORIAS WHERE NOMBRE = '"+nombreC+"'"
+        val resultado1 = db2.rawQuery(query1, null)
+        val resultado2 = db2.rawQuery(query2, null)
+        if (resultado1.moveToFirst()){
+            cv.put("ID_PRODUCTO", resultado1.getString(resultado1.getColumnIndex("ID_PRODUCTO")).toInt())
+        }
+        if (resultado2.moveToFirst()){
+            cv.put("ID_CATEGORIA", resultado2.getString(resultado2.getColumnIndex("ID_CATEGORIA")).toInt())
+        }
         var result = db.insert("CATEGORIAS_PRODUCTOS", null, cv)
     }
 

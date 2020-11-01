@@ -4,10 +4,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ztoreme_1.Categoria
+import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.MainActivity
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_agregar.*
 @Suppress("MoveLambdaOutsideParentheses")
 class ActivityAgregar : AppCompatActivity() {
     private val pickImage = 100
+    private var categoria = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,17 +29,30 @@ class ActivityAgregar : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
 
         //Categorias
-        val spinner = findViewById<Spinner>(R.id.spinner)
-        val listaCategoria : MutableList<Categoria> = ArrayList()
+        val spinner_categorias : Spinner = findViewById<Spinner>(R.id.spinner)
+        val lista  = arrayListOf<String>()
         var datos = db.extraerCategorias()
 
         for (i in datos){
-            val categoria = Categoria(i.nombreCategoria.toString())
-            listaCategoria.add(categoria)
+            lista.add(i.nombreCategoria)
         }
         if (spinner != null){
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaCategoria)
-            spinner.adapter = adapter
+            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista)
+            spinner_categorias.adapter = adapter
+        }
+
+        spinner_categorias.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
+                println("abr que pedo")
+                categoria = lista.get(position)
+
+            }
+
+            //Cambiar para cuando se tenga la base predeterminada
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("En teoria lo debería guardar equise")
+                categoria = "Holi"
+            }
         }
 
         //
@@ -117,6 +132,7 @@ class ActivityAgregar : AppCompatActivity() {
 
                             db.insertarProducto(productoNuevo)
                             Toast.makeText(context, "Producto agregado", Toast.LENGTH_SHORT).show()
+                            db.asociarCategoria(editTextProd.text.toString(), categoria)
                             finish()
                         })
 
