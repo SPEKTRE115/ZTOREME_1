@@ -21,7 +21,7 @@
             android:name=".productos.ActivityAgregar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActivityAgregarCategoria"
+            android:name=".categorias.ActivityAgregarCategoria"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"

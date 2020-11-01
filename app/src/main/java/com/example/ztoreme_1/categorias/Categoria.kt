@@ -1,4 +1,4 @@
-package com.example.ztoreme_1
+package com.example.ztoreme_1.categorias
 
 import java.io.Serializable
 

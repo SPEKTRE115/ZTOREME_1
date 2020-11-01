@@ -1,4 +1,4 @@
-package com.example.ztoreme_1
+package com.example.ztoreme_1.categorias
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.ztoreme_1.MainActivity
+import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
-import com.example.ztoreme_1.productos.Producto
-import kotlinx.android.synthetic.main.activity_agregar.*
 import kotlinx.android.synthetic.main.activity_agregar.btnCancelar
 import kotlinx.android.synthetic.main.activity_agregar.btnGuardar
 import kotlinx.android.synthetic.main.activity_agregar_categoria.*
@@ -81,6 +81,7 @@ class ActivityAgregarCategoria : AppCompatActivity() {
                         { dialogInterface: DialogInterface, i: Int -> })
                     builder.show()
                 }
+
 
             } else {
                 Toast.makeText(context, "Introduce el nombre de la categoría", Toast.LENGTH_SHORT)
