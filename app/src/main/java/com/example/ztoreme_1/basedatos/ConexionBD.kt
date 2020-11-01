@@ -122,9 +122,12 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         var lista : MutableList<Producto> = ArrayList()
 
         val db = this.readableDatabase
-        val query = "SELECT * FROM PRODUCTOS P JOIN CATEGORIAS_PRODUCTOS CP ON P.ID_PRODUCTO = CP.ID_PRODUCTO" +
+        val query = "SELECT P.ID_PRODUCTO, P.NOMBRE, P.DESCRIPCION, P.CANTIDAD_ACTUAL, P.STOCK_MINIMO, P.STOCK_MAXIMO," +
+                " P.PRECIO_COMPRA, P.PRECIO_VENTA FROM PRODUCTOS P JOIN CATEGORIAS_PRODUCTOS CP ON P.ID_PRODUCTO = CP.ID_PRODUCTO" +
                 " JOIN CATEGORIAS C ON CP.ID_CATEGORIA = C.ID_CATEGORIA WHERE C.NOMBRE LIKE '"+categoria+"'"
         val result = db.rawQuery(query, null)
+
+        println(result.toString())
 
         if(result.moveToFirst()){
             do {

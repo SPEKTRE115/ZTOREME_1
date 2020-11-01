@@ -56,10 +56,12 @@ class MisProductos : AppCompatActivity() {
 
                     println("Ya puedo hacer filtros de categorias")
 
-                    lista_productos.clear()
+
 
                     val lista_productos_filtro = db.extraerProductosbyCategoria(options.get(position))
-
+                    for (i in lista_productos_filtro){
+                        println("NOMBREEEEE:                  "+i.nombreProducto)
+                    }
                     coloca_productos(lista_productos_filtro)
                 }else{
                     coloca_productos(lista_productos)
