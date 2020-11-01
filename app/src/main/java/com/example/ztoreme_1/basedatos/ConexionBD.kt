@@ -65,6 +65,17 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         var result = db.insert("PRODUCTOS",null, cv)
     }
 
+    fun asociarCategoria(nombreP : String, nombreC : String){
+        val db = this.writableDatabase
+        val db2 = this.readableDatabase
+        var cv = ContentValues()
+        val resultado1 = db2.rawQuery("SELECT ID_PRODUCTO FROM PRODUCTOS WHERE NAME = ?", Array<String>(1) {nombreP})
+        val resultado2 = db2.rawQuery("SELECT ID_CATEGORIA FROM CATEGORIAS WHERE NAME = ?", Array<String>(1) {nombreC})
+        cv.put("ID_PRODUCTO", resultado1.toString())
+        cv.put("ID_CATEGORIA", resultado2.toString())
+        var result = db.insert("CATEGORIAS_PRODUCTOS", null, cv)
+    }
+
 
     fun insertarMovimiento(movimiento : Movimiento){
         val db = this.writableDatabase

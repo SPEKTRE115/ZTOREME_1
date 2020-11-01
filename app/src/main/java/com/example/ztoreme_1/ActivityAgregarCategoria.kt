@@ -81,7 +81,6 @@ class ActivityAgregarCategoria : AppCompatActivity() {
                         { dialogInterface: DialogInterface, i: Int -> })
                     builder.show()
                 }
-                db.insertarCategoria(categoriaNueva)
 
             } else {
                 Toast.makeText(context, "Introduce el nombre de la categoría", Toast.LENGTH_SHORT)

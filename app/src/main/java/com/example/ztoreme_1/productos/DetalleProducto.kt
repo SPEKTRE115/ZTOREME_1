@@ -34,7 +34,7 @@ class DetalleProducto : AppCompatActivity() {
 
         btn_borrar_producto.setOnClickListener({
             builder.setTitle("Confirmacion")
-            builder.setMessage("¿Estas seguro de eliminar el producto"+producto.nombreProducto+"?")
+            builder.setMessage("¿Estas seguro de eliminar el producto "+producto.nombreProducto+"?")
 
             builder.setPositiveButton("Guardar", { dialogInterface: DialogInterface, i: Int ->
 

@@ -4,10 +4,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ztoreme_1.Categoria
 import com.example.ztoreme_1.MainActivity
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
@@ -22,9 +22,25 @@ class ActivityAgregar : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar)
         val context = this
+        var db = DataBaseHandler(context)
 
         val builder = AlertDialog.Builder(this)
 
+        //Categorias
+        val spinner = findViewById<Spinner>(R.id.spinner)
+        val listaCategoria : MutableList<Categoria> = ArrayList()
+        var datos = db.extraerCategorias()
+
+        for (i in datos){
+            val categoria = Categoria(i.nombreCategoria.toString())
+            listaCategoria.add(categoria)
+        }
+        if (spinner != null){
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaCategoria)
+            spinner.adapter = adapter
+        }
+
+        //
 
         btnCancelar.setOnClickListener({
 
@@ -53,6 +69,7 @@ class ActivityAgregar : AppCompatActivity() {
         }
 
         //Parte Imagen
+        editUrl.setEnabled(false)
         BtnImagen.setOnClickListener({
             val galeria = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(galeria, pickImage)
@@ -70,7 +87,7 @@ class ActivityAgregar : AppCompatActivity() {
                 /*Modal para confirmar el guardar el producto*/
                 var productoNuevo = Producto(
                     editTextProd.text.toString(),
-                    "nop",
+                    editUrl.text.toString(),
                     editDescripcion.text.toString(),
                     (editNumCantidad.text.toString()).toInt(),
                     (editstockMax.text.toString()).toInt(),
@@ -78,7 +95,7 @@ class ActivityAgregar : AppCompatActivity() {
                     (editprecioCompra.text.toString()).toInt(),
                     (editprecioVenta.text.toString()).toInt()
                 )
-                var db = DataBaseHandler(context)
+
 
 
                 if (validarNombre(editTextProd.text.toString())) {
