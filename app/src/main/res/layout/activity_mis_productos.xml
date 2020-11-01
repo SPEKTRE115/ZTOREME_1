@@ -2,10 +2,11 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:scrollbarSize="10dp"
     tools:context=".productos.MisProductos">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -39,6 +40,21 @@
         </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+
+    <Spinner
+        android:id="@+id/spinner_categoria"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/style_border_info_product"
+        android:backgroundTint="@color/ic_launcher_background"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:spinnerMode="dialog"
+        android:textAlignment="center"
+        android:verticalScrollbarPosition="defaultPosition"></Spinner>
+
 
 
     <ListView

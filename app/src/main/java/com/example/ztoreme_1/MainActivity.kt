@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.ztoreme_1.categorias.ActivityAgregarCategoria
 import com.example.ztoreme_1.productos.ActivityAgregar
 import com.example.ztoreme_1.productos.MisProductos
 

@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.ztoreme_1.Categoria
+import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.Movimiento
 import com.example.ztoreme_1.productos.Producto
 
@@ -101,6 +101,33 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    fun extraerProductosbyCategoria(categoria:String) : MutableList<Producto>{
+        var lista : MutableList<Producto> = ArrayList()
+
+        val db = this.readableDatabase
+        val query = "SELECT * FROM PRODUCTOS P JOIN CATEGORIAS_PRODUCTOS CP ON P.ID_PRODUCTO = CP.ID_PRODUCTO" +
+                " JOIN CATEGORIAS C ON CP.ID_CATEGORIA = C.ID_CATEGORIA WHERE C.NOMBRE LIKE '"+categoria+"'"
+        val result = db.rawQuery(query, null)
+
+        if(result.moveToFirst()){
+            do {
+                var producto = Producto()
+                producto.idProducto = result.getString(result.getColumnIndex("ID_PRODUCTO")).toInt()
+                producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
+                producto.descripcion = result.getString(result.getColumnIndex("DESCRIPCION")).toString()
+                producto.cantidadActual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
+                producto.stockMinimo = result.getString(result.getColumnIndex("STOCK_MINIMO")).toInt()
+                producto.stockMaximo = result.getString(result.getColumnIndex("STOCK_MAXIMO")).toInt()
+                producto.precioCompra = result.getString(result.getColumnIndex("PRECIO_COMPRA")).toInt()
+                producto.precioVenta = result.getString(result.getColumnIndex("PRECIO_VENTA")).toInt()
+                lista.add(producto)
+            } while (result.moveToNext())
+        }
+        result.close()
+        db.close()
+        return lista
+    }
+
     fun extraeNom() : MutableList<Producto>{
         var lista : MutableList<Producto> = ArrayList()
 
@@ -118,9 +145,6 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.close()
         return lista
     }
-
-
-
 
     fun borrarProducto(nombre : String){
         val db = this.writableDatabase
