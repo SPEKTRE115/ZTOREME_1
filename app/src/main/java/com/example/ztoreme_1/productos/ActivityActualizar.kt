@@ -12,19 +12,44 @@ import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.MainActivity
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
+import kotlinx.android.synthetic.main.activity_actualizar.*
 import kotlinx.android.synthetic.main.activity_agregar.*
+import kotlinx.android.synthetic.main.activity_agregar.BtnImagen
+import kotlinx.android.synthetic.main.activity_agregar.btnCancelar
+import kotlinx.android.synthetic.main.activity_agregar.btnGuardar
+import kotlinx.android.synthetic.main.activity_agregar.editDescripcion
+import kotlinx.android.synthetic.main.activity_agregar.editNumCantidad
+import kotlinx.android.synthetic.main.activity_agregar.editTextProd
+import kotlinx.android.synthetic.main.activity_agregar.editUrl
+import kotlinx.android.synthetic.main.activity_agregar.editprecioCompra
+import kotlinx.android.synthetic.main.activity_agregar.editprecioVenta
+import kotlinx.android.synthetic.main.activity_agregar.editstockMax
+import kotlinx.android.synthetic.main.activity_agregar.editstockMin
+import kotlinx.android.synthetic.main.activity_agregar.spinner
 
 @Suppress("MoveLambdaOutsideParentheses")
-class ActivityAgregar : AppCompatActivity() {
+class ActivityActualizar : AppCompatActivity() {
     private val pickImage = 100
     private var categoria = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_agregar)
+        setContentView(R.layout.activity_actualizar)
         val context = this
         var db = DataBaseHandler(context)
+
+        //Setear antiguos
+        editNumCantidad.setText(intent.getStringExtra("SACTUAL").toInt())
+        editstockMax.setText(intent.getStringExtra("SMAXIMO").toInt())
+        editstockMin.setText(intent.getStringExtra("SMINIMO").toInt())
+        editDescripcion.setText(intent.getStringExtra("DESC"))
+        editprecioCompra.setText(intent.getStringExtra("PCOMPRA").toInt())
+        editprecioVenta.setText(intent.getStringExtra("PVENTA").toInt())
+
+        var cadena:String = intent.getStringExtra("NOMBRE")
+
+        editTextProd.setText(cadena)
 
         val builder = AlertDialog.Builder(this)
 
@@ -62,7 +87,7 @@ class ActivityAgregar : AppCompatActivity() {
 
             builder.setPositiveButton("Salir", { dialogInterface: DialogInterface, i: Int ->
 
-                val intento1 = Intent(this, MainActivity::class.java)
+                val intento1 = Intent(this, DetalleProducto::class.java)
                 startActivity(intento1)
 
             })
@@ -77,7 +102,7 @@ class ActivityAgregar : AppCompatActivity() {
 
         val click_atras = findViewById(R.id.atras_agregar) as ImageView
         click_atras.setOnClickListener {
-            val intento1 = Intent(this, MainActivity::class.java)
+            val intento1 = Intent(this, DetalleProducto::class.java)
             startActivity(intento1)
         }
 
@@ -122,15 +147,15 @@ class ActivityAgregar : AppCompatActivity() {
                 } else {
 
                     builder.setTitle("Confirmacion")
-                    builder.setMessage("¿Estas seguro de guardar el nuevo producto?")
+                    builder.setMessage("¿Estas seguro de actualizar el producto?")
 
                     builder.setPositiveButton(
                         "Guardar",
                         { dialogInterface: DialogInterface, i: Int ->
 
-                            db.insertarProducto(productoNuevo)
-                            Toast.makeText(context, "Producto agregado", Toast.LENGTH_SHORT).show()
-                            db.asociarCategoria(editTextProd.text.toString(), categoria)
+                            db.actualizarProducto(productoNuevo, cadena)
+                            Toast.makeText(context, "Producto actualizado", Toast.LENGTH_SHORT).show()
+                            db.actualizarCategoria(editTextProd.text.toString(), categoria)
                             finish()
                         })
 
@@ -167,7 +192,7 @@ class ActivityAgregar : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, DetalleProducto::class.java)
         startActivity(intent)
     }
 

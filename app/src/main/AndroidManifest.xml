@@ -23,6 +23,8 @@
         <activity
             android:name=".categorias.ActivityAgregarCategoria"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".productos.ActivityActualizar"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/nombre_app"

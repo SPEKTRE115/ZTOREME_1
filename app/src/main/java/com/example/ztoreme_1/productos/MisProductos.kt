@@ -84,7 +84,7 @@ class MisProductos : AppCompatActivity() {
 
         for (i in lista_productos){
             val producto = Producto(i.nombreProducto,
-                R.drawable.camara.toString(), i.descripcion,i.cantidadActual,5,45,4600,i.precioVenta)
+                i.imagen, i.descripcion,i.cantidadActual,i.stockMinimo,i.stockMaximo,i.precioCompra,i.precioVenta)
             listaProduct.add(producto)
         }
 

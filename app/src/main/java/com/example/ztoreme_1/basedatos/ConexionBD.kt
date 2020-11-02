@@ -82,6 +82,43 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         var result = db.insert("CATEGORIAS_PRODUCTOS", null, cv)
     }
 
+    fun actualizarCategoria(nombreP: String, nombreC: String){
+        val db = this.writableDatabase
+        val db2 = this.readableDatabase
+        var ayuda = ""
+        var cv = ContentValues()
+        val query1 = "SELECT * FROM PRODUCTOS WHERE NOMBRE = '"+nombreP+"'"
+        val query2 = "SELECT * FROM CATEGORIAS WHERE NOMBRE = '"+nombreC+"'"
+        val resultado1 = db2.rawQuery(query1, null)
+        val resultado2 = db2.rawQuery(query2, null)
+        if (resultado1.moveToFirst()){
+            ayuda = resultado1.getString(resultado1.getColumnIndex("ID_PRODUCTO"))
+        }
+        if (resultado2.moveToFirst()){
+            cv.put("ID_CATEGORIA", resultado2.getString(resultado2.getColumnIndex("ID_CATEGORIA")).toInt())
+        }
+        db.update("CATEGORIAS_PRODUCTOS", cv, "ID_PRODUCTO = ?", Array(1){ayuda})
+    }
+
+    fun actualizarProducto(producto: Producto, nombreP: String){
+
+        val db = this.writableDatabase
+        val query = "SELECT * FROM PRODUCTOS"
+        val result = db.rawQuery(query, null)
+        var cv = ContentValues()
+        cv.put("NOMBRE", producto.nombreProducto)
+        cv.put("IMAGEN", producto.imagen)
+        cv.put("DESCRIPCION", producto.descripcion)
+        cv.put("CANTIDAD_ACTUAL", producto.cantidadActual)
+        cv.put("STOCK_MINIMO", producto.stockMinimo)
+        cv.put("STOCK_MAXIMO", producto.stockMaximo)
+        cv.put("PRECIO_COMPRA", producto.precioCompra)
+        cv.put("PRECIO_VENTA", producto.precioVenta)
+        db.update("PRODUCTOS", cv, "NOMBRE =?", Array<String>(1) {nombreP})
+        result.close()
+        db.close()
+    }
+
 
     fun insertarMovimiento(movimiento : Movimiento){
         val db = this.writableDatabase
