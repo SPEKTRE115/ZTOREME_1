@@ -39,7 +39,7 @@ private const val tablaCategorias = "CREATE TABLE IF NOT EXISTS CATEGORIAS(" +
         "ID_CATEGORIA INTEGER PRIMARY KEY AUTOINCREMENT," +
         "NOMBRE TEXT);"
 
-class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
+class DataBaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(tablaProductos)
         db?.execSQL(tablaMovimientos)
@@ -51,7 +51,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         TODO("Not yet implemented")
     }
 
-    fun insertarProducto(producto : Producto){
+    fun insertarProducto(producto: Producto){
         val db = this.writableDatabase
         var cv = ContentValues()
         cv.put("NOMBRE", producto.nombreProducto)
@@ -62,18 +62,18 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         cv.put("STOCK_MAXIMO", producto.stockMaximo)
         cv.put("PRECIO_COMPRA", producto.precioCompra)
         cv.put("PRECIO_VENTA", producto.precioVenta)
-        var result = db.insert("PRODUCTOS",null, cv)
+        var result = db.insert("PRODUCTOS", null, cv)
     }
 
 
-    fun insertarMovimiento(movimiento : Movimiento){
+    fun insertarMovimiento(movimiento: Movimiento){
         val db = this.writableDatabase
         var cv = ContentValues()
         cv.put("FECHA_REGISTRO", movimiento.fechaRegistro)
         cv.put("ID_PRODUCTO", movimiento.idProducto)
         cv.put("CANTIDAD_MOV", movimiento.cantidadMov)
         cv.put("ENTRADA", movimiento.entrada)
-        var result = db.insert("MOVIMIENTOS",null, cv)
+        var result = db.insert("MOVIMIENTOS", null, cv)
     }
 
     fun extraerProductos() : MutableList<Producto>{
@@ -122,18 +122,47 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
 
 
 
-    fun borrarProducto(nombre : String){
+    fun borrarProducto(nombre: String){
         val db = this.writableDatabase
         //db.execSQL("DELETE FROM PRODUCTOS WHERE NOMBRE="+nombre)
-        db.delete("PRODUCTOS","NOMBRE = '" +nombre + "'",null)
+        db.delete("PRODUCTOS", "NOMBRE = '" + nombre + "'", null)
         db.close()
     }
 
-    fun insertarCategoria(categoria : Categoria){
+
+    fun aumentarStockProducto(nombre: String, cantidad: Int){
+        val db = this.writableDatabase
+        val query = "SELECT CANTIDAD_ACTUAL FROM PRODUCTOS WHERE NOMBRE='"+nombre+"'"
+        val result = db.rawQuery(query, null)
+        result.moveToFirst()
+        var cantidad_actual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
+        var cant_final=(cantidad_actual+cantidad)
+        val valores = ContentValues()
+        valores.put("CANTIDAD_ACTUAL",cant_final)
+        db.update("PRODUCTOS", valores, "NOMBRE = '" + nombre + "'", null)
+        db.close()
+    }
+
+    fun disminuirStockProducto(nombre: String, cantidad: Int){
+        val db = this.writableDatabase
+        val query = "SELECT CANTIDAD_ACTUAL FROM PRODUCTOS WHERE NOMBRE='"+nombre+"'"
+        val result = db.rawQuery(query, null)
+        result.moveToFirst()
+        var cantidad_actual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
+        var cant_final=(cantidad_actual-cantidad)
+        val valores = ContentValues()
+        valores.put("CANTIDAD_ACTUAL",cant_final)
+        db.update("PRODUCTOS", valores, "NOMBRE = '" + nombre + "'", null)
+        db.close()
+    }
+
+
+
+    fun insertarCategoria(categoria: Categoria){
         val db = this.writableDatabase
         var cv = ContentValues()
         cv.put("NOMBRE", categoria.nombreCategoria)
-        var result = db.insert("CATEGORIAS",null,cv)
+        var result = db.insert("CATEGORIAS", null, cv)
     }
 
     fun extraerCategorias() : MutableList<Categoria>{

@@ -216,7 +216,7 @@
                     android:backgroundTint="#28df99"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="Agregar"
+                    android:text="Agregar +"
                     android:textColor="#ffffff"></TextView>
 
                 <TextView
@@ -231,7 +231,7 @@
                     android:backgroundTint="#f05454"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="Borrar"
+                    android:text="Quitar -"
                     android:textColor="#ffffff"></TextView>
 
                 <TextView
