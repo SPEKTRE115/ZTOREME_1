@@ -40,13 +40,6 @@ class ActivityActualizar : AppCompatActivity() {
         var db = DataBaseHandler(context)
 
         //Setear antiguos
-        editNumCantidad.setText(intent.getStringExtra("SACTUAL").toInt())
-        editstockMax.setText(intent.getStringExtra("SMAXIMO").toInt())
-        editstockMin.setText(intent.getStringExtra("SMINIMO").toInt())
-        editDescripcion.setText(intent.getStringExtra("DESC"))
-        editprecioCompra.setText(intent.getStringExtra("PCOMPRA").toInt())
-        editprecioVenta.setText(intent.getStringExtra("PVENTA").toInt())
-
         var cadena:String = intent.getStringExtra("NOMBRE")
 
         editTextProd.setText(cadena)
@@ -87,7 +80,7 @@ class ActivityActualizar : AppCompatActivity() {
 
             builder.setPositiveButton("Salir", { dialogInterface: DialogInterface, i: Int ->
 
-                val intento1 = Intent(this, DetalleProducto::class.java)
+                val intento1 = Intent(this, MisProductos::class.java)
                 startActivity(intento1)
 
             })
@@ -102,7 +95,7 @@ class ActivityActualizar : AppCompatActivity() {
 
         val click_atras = findViewById(R.id.atras_agregar) as ImageView
         click_atras.setOnClickListener {
-            val intento1 = Intent(this, DetalleProducto::class.java)
+            val intento1 = Intent(this, MisProductos::class.java)
             startActivity(intento1)
         }
 
@@ -192,7 +185,7 @@ class ActivityActualizar : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, DetalleProducto::class.java)
+        val intent = Intent(this, MisProductos::class.java)
         startActivity(intent)
     }
 
