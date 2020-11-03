@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
 import kotlinx.android.synthetic.main.activity_detalle_producto.*
@@ -31,6 +32,19 @@ class DetalleProducto : AppCompatActivity() {
         descripcion.text = producto.descripcion
         precio_venta.text = producto.precioVenta.toString()
         precio_compra.text = producto.precioCompra.toString()
+
+        btn_editar.setOnClickListener({
+            val intent = Intent(this, ActivityActualizar::class.java)
+            intent.putExtra("NOMBRE", nombre_producto.text.toString())
+            intent.putExtra("SMINIMO", stock_minimo.text.toString())
+            intent.putExtra("SMAXIMO", stock_maximo.text.toString())
+            intent.putExtra("SACTUAL", stock_actual.text.toString())
+            intent.putExtra("DESC", descripcion.text.toString())
+            intent.putExtra("PCOMPRA", precio_compra.text.toString())
+            intent.putExtra("PVENTA", precio_venta.text.toString())
+            startActivity(intent)
+            finish()
+        })
 
         btn_borrar_producto.setOnClickListener({
             builder.setTitle("Confirmacion")
