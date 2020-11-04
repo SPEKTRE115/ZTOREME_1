@@ -4,9 +4,16 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.Movimiento
 import com.example.ztoreme_1.productos.Producto
+import java.text.SimpleDateFormat
+import java.time.DateTimeException
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 val DATABASE_NAME = "ZTOREMEDB"
 
@@ -19,7 +26,8 @@ private const val tablaProductos = "CREATE TABLE IF NOT EXISTS PRODUCTOS  (" +
         "STOCK_MINIMO INTEGER," +
         "STOCK_MAXIMO INTEGER," +
         "PRECIO_COMPRA INTEGER," +
-        "PRECIO_VENTA INTEGER);"
+        "PRECIO_VENTA INTEGER," +
+        "FECHA_REGISTRO TEXT);"
 
 private const val tablaMovimientos = "CREATE TABLE IF NOT EXISTS MOVIMIENTOS (" +
         "FECHA_REGISTRO TEXT," +
@@ -48,7 +56,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-        TODO("Not yet implemented")
+
     }
 
     fun insertarProducto(producto : Producto){
@@ -62,6 +70,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         cv.put("STOCK_MAXIMO", producto.stockMaximo)
         cv.put("PRECIO_COMPRA", producto.precioCompra)
         cv.put("PRECIO_VENTA", producto.precioVenta)
+        cv.put("FECHA_REGISTRO", getFechaRegistro())
         var result = db.insert("PRODUCTOS",null, cv)
     }
 
@@ -132,7 +141,6 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
 
     fun extraerProductos() : MutableList<Producto>{
         var lista : MutableList<Producto> = ArrayList()
-
         val db = this.readableDatabase
         val query = "SELECT * FROM PRODUCTOS"
         val result = db.rawQuery(query, null)
@@ -187,7 +195,6 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
 
     fun extraeNom() : MutableList<Producto>{
         var lista : MutableList<Producto> = ArrayList()
-
         val db = this.readableDatabase
         val query = "SELECT * FROM PRODUCTOS"
         val result = db.rawQuery(query, null)
@@ -264,4 +271,8 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
 
 
 
+    fun getFechaRegistro() : String{
+        val fechaRegistro = Calendar.getInstance()
+        return  "${SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(fechaRegistro.time)}"
+    }
 }
