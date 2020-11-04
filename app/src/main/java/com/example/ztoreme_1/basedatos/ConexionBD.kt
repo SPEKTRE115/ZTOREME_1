@@ -236,4 +236,32 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    fun aumentarStockProducto(nombre: String, cantidad: Int){
+        val db = this.writableDatabase
+        val query = "SELECT CANTIDAD_ACTUAL FROM PRODUCTOS WHERE NOMBRE='"+nombre+"'"
+        val result = db.rawQuery(query, null)
+        result.moveToFirst()
+        var cantidad_actual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
+        var cant_final=(cantidad_actual+cantidad)
+        val valores = ContentValues()
+        valores.put("CANTIDAD_ACTUAL",cant_final)
+        db.update("PRODUCTOS", valores, "NOMBRE = '" + nombre + "'", null)
+        db.close()
+    }
+
+    fun disminuirStockProducto(nombre: String, cantidad: Int){
+        val db = this.writableDatabase
+        val query = "SELECT CANTIDAD_ACTUAL FROM PRODUCTOS WHERE NOMBRE='"+nombre+"'"
+        val result = db.rawQuery(query, null)
+        result.moveToFirst()
+        var cantidad_actual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
+        var cant_final=(cantidad_actual-cantidad)
+        val valores = ContentValues()
+        valores.put("CANTIDAD_ACTUAL",cant_final)
+        db.update("PRODUCTOS", valores, "NOMBRE = '" + nombre + "'", null)
+        db.close()
+    }
+
+
+
 }

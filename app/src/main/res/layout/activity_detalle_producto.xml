@@ -62,7 +62,7 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/img_producto"
                 android:layout_width="match_parent"
                 android:layout_height="151dp"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/etiqueta_stock_maximo"
                     android:layout_marginBottom="-32dp"
-                    android:text="Stock maximo"
+                    android:text="Stock minimo"
                     android:textColor="#000"></TextView>
 
                 <TextView
@@ -216,7 +216,7 @@
                     android:backgroundTint="#28df99"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="Agregar"
+                    android:text="Agregar +"
                     android:textColor="#ffffff"></TextView>
 
                 <TextView
@@ -231,7 +231,7 @@
                     android:backgroundTint="#f05454"
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="Borrar"
+                    android:text="Quitar -"
                     android:textColor="#ffffff"></TextView>
 
                 <TextView
