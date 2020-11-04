@@ -3,6 +3,7 @@ package com.example.ztoreme_1.productos
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
@@ -37,8 +39,9 @@ class DetalleProducto : AppCompatActivity() {
         precio_venta.text = producto.precioVenta.toString()
         precio_compra.text = producto.precioCompra.toString()
 
-        //var uri = producto.imagen
-        //var bitmap = Media
+        var uri = producto.imagen.toUri()
+
+        img_producto.setImageURI(uri)
 
         btn_borrar_producto.setOnClickListener({
             builder.setTitle("Confirmacion")
