@@ -180,7 +180,6 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
                 var producto = Producto()
                 producto.idProducto = result.getString(result.getColumnIndex("ID_PRODUCTO")).toInt()
                 producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
-                producto.imagen = result.getString(result.getColumnIndex("IMAGEN")).toString()
                 producto.descripcion = result.getString(result.getColumnIndex("DESCRIPCION")).toString()
                 producto.cantidadActual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
                 producto.stockMinimo = result.getString(result.getColumnIndex("STOCK_MINIMO")).toInt()
