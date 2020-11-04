@@ -29,7 +29,7 @@ class DetalleProducto : AppCompatActivity() {
 
         val producto = intent.getSerializableExtra("producto") as Producto
 
-        
+
         nombre_producto.text = producto.nombreProducto
         stock_actual.text = producto.cantidadActual.toString()
         stock_maximo.text = producto.stockMaximo.toString()
