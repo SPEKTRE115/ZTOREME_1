@@ -29,7 +29,6 @@ class DetalleProducto : AppCompatActivity() {
 
         val producto = intent.getSerializableExtra("producto") as Producto
 
-
         nombre_producto.text = producto.nombreProducto
         stock_actual.text = producto.cantidadActual.toString()
         stock_maximo.text = producto.stockMaximo.toString()
@@ -37,6 +36,9 @@ class DetalleProducto : AppCompatActivity() {
         descripcion.text = producto.descripcion
         precio_venta.text = producto.precioVenta.toString()
         precio_compra.text = producto.precioCompra.toString()
+
+        //var uri = producto.imagen
+        //var bitmap = Media
 
         btn_borrar_producto.setOnClickListener({
             builder.setTitle("Confirmacion")
@@ -59,13 +61,7 @@ class DetalleProducto : AppCompatActivity() {
 
         btn_editar.setOnClickListener({
             val intent = Intent(this, ActivityActualizar::class.java)
-            intent.putExtra("NOMBRE", nombre_producto.text.toString())
-            intent.putExtra("SMINIMO", stock_minimo.text.toString())
-            intent.putExtra("SMAXIMO", stock_maximo.text.toString())
-            intent.putExtra("SACTUAL", stock_actual.text.toString())
-            intent.putExtra("DESC", descripcion.text.toString())
-            intent.putExtra("PCOMPRA", precio_compra.text.toString())
-            intent.putExtra("PVENTA", precio_venta.text.toString())
+            intent.putExtra("producto", producto)
             startActivity(intent)
             finish()
         })

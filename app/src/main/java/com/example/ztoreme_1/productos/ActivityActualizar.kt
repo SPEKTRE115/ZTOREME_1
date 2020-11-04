@@ -40,9 +40,17 @@ class ActivityActualizar : AppCompatActivity() {
         var db = DataBaseHandler(context)
 
         //Setear antiguos
-        var cadena:String = intent.getStringExtra("NOMBRE")
 
-        editTextProd.setText(cadena)
+        val producto = intent.getSerializableExtra("producto") as Producto
+
+        editTextProd.setText(producto.nombreProducto)
+        editprecioVenta.setText(producto.precioVenta.toString())
+        editprecioCompra.setText(producto.precioCompra.toString())
+        editNumCantidad.setText(producto.cantidadActual.toString())
+        editDescripcion.setText(producto.descripcion)
+        editstockMin.setText(producto.stockMinimo.toString())
+        editstockMax.setText(producto.stockMaximo.toString())
+        editUrl.setText(producto.imagen)
 
         val builder = AlertDialog.Builder(this)
 
@@ -129,16 +137,6 @@ class ActivityActualizar : AppCompatActivity() {
 
 
 
-                if (validarNombre(editTextProd.text.toString())) {
-
-                    Toast.makeText(
-                        context,
-                        "Hay un producto que ya tiene este nombre",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                } else {
-
                     builder.setTitle("Confirmacion")
                     builder.setMessage("¿Estas seguro de actualizar el producto?")
 
@@ -146,7 +144,7 @@ class ActivityActualizar : AppCompatActivity() {
                         "Guardar",
                         { dialogInterface: DialogInterface, i: Int ->
 
-                            db.actualizarProducto(productoNuevo, cadena)
+                            db.actualizarProducto(productoNuevo, producto.nombreProducto)
                             Toast.makeText(context, "Producto actualizado", Toast.LENGTH_SHORT).show()
                             db.actualizarCategoria(editTextProd.text.toString(), categoria)
                             finish()
@@ -155,27 +153,13 @@ class ActivityActualizar : AppCompatActivity() {
                     builder.setNegativeButton("Cancelar",
                         { dialogInterface: DialogInterface, i: Int -> })
                     builder.show()
-                }
+
 
             } else {
                 Toast.makeText(context, "Introduce los datos correctamente", Toast.LENGTH_SHORT)
                     .show()
             }
         })
-    }
-
-    fun validarNombre(nombre: String): Boolean{
-        val context = this
-        var bandera = false
-        var db = DataBaseHandler(context)
-        var datos = db.extraeNom()
-        for (i in datos){
-            if (i.nombreProducto.equals(nombre, ignoreCase = true)){
-                bandera = true
-                break
-            }
-        }
-        return bandera
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {       super.onActivityResult(requestCode, resultCode, data)
