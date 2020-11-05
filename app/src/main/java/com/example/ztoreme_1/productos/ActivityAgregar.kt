@@ -100,8 +100,8 @@ class ActivityAgregar : AppCompatActivity() {
                     (editNumCantidad.text.toString()).toInt(),
                     (editstockMin.text.toString()).toInt(),
                     (editstockMax.text.toString()).toInt(),
-                    (editprecioCompra.text.toString()).toInt(),
-                    (editprecioVenta.text.toString()).toInt()
+                    (editprecioCompra.text.toString()).toDouble(),
+                    (editprecioVenta.text.toString()).toDouble()
                 )
 
 

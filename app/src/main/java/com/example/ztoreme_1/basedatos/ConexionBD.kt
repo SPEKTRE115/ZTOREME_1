@@ -154,8 +154,8 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
                 producto.cantidadActual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
                 producto.stockMinimo = result.getString(result.getColumnIndex("STOCK_MINIMO")).toInt()
                 producto.stockMaximo = result.getString(result.getColumnIndex("STOCK_MAXIMO")).toInt()
-                producto.precioCompra = result.getString(result.getColumnIndex("PRECIO_COMPRA")).toInt()
-                producto.precioVenta = result.getString(result.getColumnIndex("PRECIO_VENTA")).toInt()
+                producto.precioCompra = result.getString(result.getColumnIndex("PRECIO_COMPRA")).toDouble()
+                producto.precioVenta = result.getString(result.getColumnIndex("PRECIO_VENTA")).toDouble()
                 lista.add(producto)
             } while (result.moveToNext())
         }
@@ -184,8 +184,8 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
                 producto.cantidadActual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
                 producto.stockMinimo = result.getString(result.getColumnIndex("STOCK_MINIMO")).toInt()
                 producto.stockMaximo = result.getString(result.getColumnIndex("STOCK_MAXIMO")).toInt()
-                producto.precioCompra = result.getString(result.getColumnIndex("PRECIO_COMPRA")).toInt()
-                producto.precioVenta = result.getString(result.getColumnIndex("PRECIO_VENTA")).toInt()
+                producto.precioCompra = result.getString(result.getColumnIndex("PRECIO_COMPRA")).toDouble()
+                producto.precioVenta = result.getString(result.getColumnIndex("PRECIO_VENTA")).toDouble()
                 lista.add(producto)
             } while (result.moveToNext())
         }

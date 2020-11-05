@@ -11,11 +11,11 @@ class Producto : Serializable{
     var cantidadActual : Int = 0
     var stockMinimo : Int = 0
     var stockMaximo  : Int = 0
-    var precioCompra  : Int = 0
-    var precioVenta : Int = 0
+    var precioCompra  : Double = 0.0
+    var precioVenta : Double = 0.0
 
     constructor(nombreProducto : String, imagen : String, descripcion : String, cantidadActual : Int,
-                stockMinimo : Int, stockMaximo : Int, precioCompra : Int, precioVenta : Int){
+                stockMinimo : Int, stockMaximo : Int, precioCompra : Double, precioVenta : Double){
         this.nombreProducto = nombreProducto
         this.imagen = imagen
         this.descripcion = descripcion
