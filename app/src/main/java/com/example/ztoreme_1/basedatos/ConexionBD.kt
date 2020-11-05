@@ -168,8 +168,8 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         var lista : MutableList<Producto> = ArrayList()
 
         val db = this.readableDatabase
-        val query = "SELECT P.ID_PRODUCTO, P.NOMBRE, P.DESCRIPCION, P.CANTIDAD_ACTUAL, P.STOCK_MINIMO, P.STOCK_MAXIMO," +
-                " P.PRECIO_COMPRA, P.PRECIO_VENTA FROM PRODUCTOS P JOIN CATEGORIAS_PRODUCTOS CP ON P.ID_PRODUCTO = CP.ID_PRODUCTO" +
+        val query = "SELECT P.NOMBRE, P.DESCRIPCION, P.CANTIDAD_ACTUAL, P.STOCK_MINIMO, P.STOCK_MAXIMO," +
+                " P.PRECIO_COMPRA, P.PRECIO_VENTA, P.IMAGEN FROM PRODUCTOS P JOIN CATEGORIAS_PRODUCTOS CP ON P.ID_PRODUCTO = CP.ID_PRODUCTO" +
                 " JOIN CATEGORIAS C ON CP.ID_CATEGORIA = C.ID_CATEGORIA WHERE C.NOMBRE LIKE '"+categoria+"'"
         val result = db.rawQuery(query, null)
 
@@ -178,7 +178,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         if(result.moveToFirst()){
             do {
                 var producto = Producto()
-                producto.idProducto = result.getString(result.getColumnIndex("ID_PRODUCTO")).toInt()
+                producto.imagen = result.getString(result.getColumnIndex("IMAGEN")).toString()
                 producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
                 producto.descripcion = result.getString(result.getColumnIndex("DESCRIPCION")).toString()
                 producto.cantidadActual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()

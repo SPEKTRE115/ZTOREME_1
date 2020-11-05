@@ -84,23 +84,25 @@
 
                 <TextView
                     android:id="@+id/etiqueta_stock_actual"
-                    android:layout_width="340dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Stock actual"
                     android:textColor="#000"></TextView>
 
                 <TextView
                     android:id="@+id/stock_actual"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/etiqueta_stock_actual"
-                    android:layout_toEndOf="@+id/etiqueta_stock_actual"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="17dp"
                     android:text="75"
                     android:textColor="#000"></TextView>
 
                 <TextView
                     android:id="@+id/etiqueta_stock_maximo"
-                    android:layout_width="340dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/etiqueta_stock_actual"
                     android:layout_marginBottom="-32dp"
@@ -109,16 +111,18 @@
 
                 <TextView
                     android:id="@+id/stock_maximo"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/etiqueta_stock_maximo"
-                    android:layout_toEndOf="@+id/etiqueta_stock_maximo"
+                    android:layout_below="@+id/stock_actual"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="17dp"
                     android:text="100"
                     android:textColor="#000"></TextView>
 
                 <TextView
                     android:id="@+id/etiqueta_stock_minimo"
-                    android:layout_width="340dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/etiqueta_stock_maximo"
                     android:layout_marginBottom="-32dp"
@@ -127,10 +131,12 @@
 
                 <TextView
                     android:id="@+id/stock_minimo"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/etiqueta_stock_minimo"
-                    android:layout_toEndOf="@+id/etiqueta_stock_minimo"
+                    android:layout_below="@+id/stock_maximo"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="17dp"
                     android:text="5"
                     android:textColor="#000"></TextView>
 
@@ -140,7 +146,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/etiqueta_stock_minimo"
                     android:layout_marginTop="32dp"
-                    android:paddingLeft="20dp"
                     android:text="Descripción"
                     android:textColor="#000"></TextView>
 
@@ -150,50 +155,51 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/etiqueta_descripcion"
                     android:layout_marginTop="32dp"
-                    android:background="@drawable/style_border_info_product"
                     android:paddingLeft="20dp"
                     android:text="Cocacola con mas azucar"
                     android:textColor="#000"></TextView>
 
                 <TextView
                     android:id="@+id/etiqueta_precio_venta"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/descripcion"
                     android:layout_marginTop="32dp"
-                    android:paddingLeft="16dp"
+
                     android:text="Precio venta:"
                     android:textColor="#000"></TextView>
 
                 <TextView
                     android:id="@+id/etiqueta_precio_compra"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/descripcion"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="32dp"
-                    android:layout_toEndOf="@+id/etiqueta_precio_venta"
-                    android:paddingLeft="16dp"
+                    android:layout_marginEnd="70dp"
                     android:text="Precio compra:"
                     android:textColor="#000"></TextView>
 
                 <TextView
                     android:id="@+id/precio_venta"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/etiqueta_precio_venta"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="4dp"
                     android:layout_marginTop="32dp"
-                    android:paddingLeft="16dp"
+
                     android:text="$500.00"
                     android:textColor="#000"></TextView>
 
                 <TextView
                     android:id="@+id/precio_compra"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/etiqueta_precio_compra"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="32dp"
-                    android:layout_toEndOf="@+id/precio_venta"
-                    android:paddingLeft="16dp"
+                    android:layout_marginEnd="110dp"
                     android:text="$250.00"
                     android:textColor="#000"></TextView>
 

@@ -1,27 +1,35 @@
 package com.example.ztoreme_1
 
+import android.Manifest
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ztoreme_1.categorias.ActivityAgregarCategoria
 import com.example.ztoreme_1.notificaciones.NotificationUtils
 import com.example.ztoreme_1.productos.ActivityAgregar
 import com.example.ztoreme_1.productos.MisProductos
 import java.util.*
+import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {
 
     private val mNotificationTime = Calendar.getInstance().timeInMillis + 10000 //Set after 5 seconds from the current time.
     private var mNotified = false
+    private var dosvecesAtras = false
     /*lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel: NotificationChannel
     lateinit var  builder : Notification.Builder
@@ -29,13 +37,23 @@ class MainActivity : AppCompatActivity() {
     private val description = "Notifica que productos han estado" +
             "mucho tiempo almacenados"*/
 
+    @RequiresApi(Build.VERSION_CODES.M)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        val context = this
+
         if (!mNotified) {
             NotificationUtils().setNotification(mNotificationTime, this@MainActivity)
+        }
+
+        if  (checkSelfPermission("READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(context, "PERMISOS CONCEDIDOS", Toast.LENGTH_SHORT).show()
+        }else{
+            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 100)
         }
 
         val click_1 = findViewById(R.id.seccion1) as TextView
@@ -93,49 +111,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-
+        if (dosvecesAtras){
+            finish()
+            exitProcess(0)
+        }
+        this.dosvecesAtras = true
+        Toast.makeText(this, "Regresa una vez más para salir de la aplicación", Toast.LENGTH_SHORT).show()
+        Handler().postDelayed(Runnable { dosvecesAtras = false }, 2000)
     }
-    /*
-    fun crearNotificacion(){
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val intent = Intent(this, LauncherActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            notificationChannel = NotificationChannel(
-                channelID,
-                description,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.CYAN
-            notificationChannel.enableVibration(false)
-            notificationManager.createNotificationChannel(notificationChannel)
-
-            builder = Notification.Builder(this, channelID)
-                .setSmallIcon(R.mipmap.logo_ztore)
-                .setContentTitle("Sistema ZTORE ME")
-                .setContentText(
-                    "Hola\n¿Tienes 5 minutos?\nHay productos que llevan mucho tiempo en tu inventario" +
-                            " y requieren tu atención."
-                )
-                .setContentIntent(pendingIntent)
-        }
-        else{
-            builder = Notification.Builder(this)
-                .setSmallIcon(R.mipmap.logo_ztore)
-                .setContentTitle("Sistema ZTORE ME")
-                .setContentText(
-                    "Hola\n¿Tienes 5 minutos?\nHay productos que llevan mucho tiempo en tu inventario" +
-                            " y requieren tu atención."
-                )
-                .setContentIntent(pendingIntent)
-        }
-        notificationManager.notify(40000, builder.build())
-    }*/
 }

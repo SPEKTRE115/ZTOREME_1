@@ -68,160 +68,85 @@
                 android:id="@+id/editDescripcion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="64dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="true"
+                android:hint="Descripción"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView12"
-                app:layout_constraintTop_toBottomOf="@+id/editprecioVenta" />
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text="Descripción"
-                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView11"
-                tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                app:layout_constraintTop_toBottomOf="@+id/editprecioVenta" />
 
             <EditText
                 android:id="@+id/editprecioVenta"
-                android:layout_width="210dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="true"
+                android:hint="Precio venta"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editprecioCompra" />
 
             <EditText
                 android:id="@+id/editprecioCompra"
-                android:layout_width="180dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="52dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="true"
+                android:hint="Precio compra"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView10"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editstockMin" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="18dp"
-                android:text="Precio Compra"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9"
-                tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text="Precio Venta"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
-                tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <EditText
                 android:id="@+id/editstockMin"
-                android:layout_width="180dp"
+                android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="true"
+                android:hint="Stock mínimo"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView9"
-                app:layout_constraintTop_toBottomOf="@+id/editstockMax" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="19dp"
-                android:text="Stock Mínimo"
-                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8"
-                tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                app:layout_constraintTop_toBottomOf="@+id/editstockMax" />
 
             <EditText
                 android:id="@+id/editstockMax"
-                android:layout_width="180dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="true"
+                android:hint="Stock máximo"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/editNumCantidad" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="24dp"
-                android:text="Stock Máximo"
-                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView28"
-                tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                app:layout_constraintTop_toBottomOf="@+id/editNumCantidad" />
 
             <EditText
                 android:id="@+id/editNumCantidad"
-                android:layout_width="210dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="64dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="true"
+                android:hint="Cantidad"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextProd" />
-
-            <TextView
-                android:id="@+id/textView28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:text="Cantidad"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/editNumCantidad"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView27"
-                tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-            <TextView
-                android:id="@+id/textView27"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
-                android:text="Nombre del producto"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner"
-                tools:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <EditText
                 android:id="@+id/editTextProd"
@@ -232,10 +157,10 @@
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="auto"
+                android:hint="Nombre producto"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView27"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
             <Button
@@ -265,11 +190,10 @@
                 android:layout_width="103dp"
                 android:layout_height="58dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
                 android:backgroundTint="#E60707"
                 android:text="Imagen"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                tools:layout_editor_absoluteY="400dp" />
 
             <Spinner
                 android:id="@+id/spinner"
