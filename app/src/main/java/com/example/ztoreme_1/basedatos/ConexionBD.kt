@@ -25,8 +25,8 @@ private const val tablaProductos = "CREATE TABLE IF NOT EXISTS PRODUCTOS  (" +
         "CANTIDAD_ACTUAL INTEGER," +
         "STOCK_MINIMO INTEGER," +
         "STOCK_MAXIMO INTEGER," +
-        "PRECIO_COMPRA INTEGER," +
-        "PRECIO_VENTA INTEGER," +
+        "PRECIO_COMPRA DECIMAL(8,2)," +
+        "PRECIO_VENTA DECIMAL(8,2)," +
         "FECHA_REGISTRO TEXT);"
 
 private const val tablaMovimientos = "CREATE TABLE IF NOT EXISTS MOVIMIENTOS (" +
@@ -156,6 +156,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
                 producto.stockMaximo = result.getString(result.getColumnIndex("STOCK_MAXIMO")).toInt()
                 producto.precioCompra = result.getString(result.getColumnIndex("PRECIO_COMPRA")).toInt()
                 producto.precioVenta = result.getString(result.getColumnIndex("PRECIO_VENTA")).toInt()
+                producto.fechaRegistro = result.getString(result.getColumnIndex("FECHA_REGISTRO")).toString()
                 lista.add(producto)
             } while (result.moveToNext())
         }

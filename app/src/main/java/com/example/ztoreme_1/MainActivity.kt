@@ -1,12 +1,8 @@
 package com.example.ztoreme_1
 
 import android.Manifest
-import android.app.*
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -21,21 +17,20 @@ import com.example.ztoreme_1.categorias.ActivityAgregarCategoria
 import com.example.ztoreme_1.notificaciones.NotificationUtils
 import com.example.ztoreme_1.productos.ActivityAgregar
 import com.example.ztoreme_1.productos.MisProductos
+import com.example.ztoreme_1.productos.Producto
+import com.example.ztoreme_1.basedatos.DataBaseHandler
+import java.lang.Integer.parseInt
+import java.text.SimpleDateFormat
+
 import java.util.*
 import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val mNotificationTime = Calendar.getInstance().timeInMillis + 10000 //Set after 5 seconds from the current time.
-    private var mNotified = false
+    private val mNotificationTime = Calendar.getInstance().timeInMillis + 60000
     private var dosvecesAtras = false
-    /*lateinit var notificationManager : NotificationManager
-    lateinit var notificationChannel: NotificationChannel
-    lateinit var  builder : Notification.Builder
-    private val channelID = "NOTIFICACION_PRODUCTO_ANTIGUO"
-    private val description = "Notifica que productos han estado" +
-            "mucho tiempo almacenados"*/
+
 
     @RequiresApi(Build.VERSION_CODES.M)
 
@@ -45,10 +40,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val context = this
-
-        if (!mNotified) {
-            NotificationUtils().setNotification(mNotificationTime, this@MainActivity)
-        }
 
         if  (checkSelfPermission("READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED){
             Toast.makeText(context, "PERMISOS CONCEDIDOS", Toast.LENGTH_SHORT).show()
@@ -92,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intento1)
         }
 
+        verificaAntiguedad()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -119,5 +111,26 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Regresa una vez más para salir de la aplicación", Toast.LENGTH_SHORT).show()
         Handler().postDelayed(Runnable { dosvecesAtras = false }, 2000)
     }
+
+    fun verificaAntiguedad(){
+        val context = this
+        val db = DataBaseHandler(context)
+        val lista : MutableList<Producto> = db.extraerProductos()
+        for (producto in lista){
+            var fechaProducto = producto.fechaRegistro
+            var splitFechaHora = fechaProducto.split(" ")
+            var splitFecha = splitFechaHora[0].split("/")
+            var splitHora = splitFechaHora[1].split(":")
+            val calendario = Calendar.getInstance()
+            val minuto = SimpleDateFormat("mm").format(calendario.time)
+            println(splitHora)
+            println(minuto)
+            if( parseInt(splitHora[1]) == parseInt(minuto)){ //para ejemplificar se hace la comparacion en minutos
+                NotificationUtils().setNotification(mNotificationTime, this@MainActivity)
+            }
+        }
+    }
+
+
 
 }
