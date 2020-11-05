@@ -40,11 +40,11 @@
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="398dp"
             android:layout_height="175dp"
             android:orientation="horizontal"
 
-            >
+            android:paddingRight="24dp">
 
             <LinearLayout
                 android:layout_width="180dp"
@@ -74,7 +74,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="179dp"
+                android:layout_width="165dp"
                 android:layout_height="150dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/style_border_edit_text"
@@ -99,6 +99,18 @@
                     android:textColor="#fff"
                     android:textSize="25dp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView_1"
+                    android:layout_width="35dp"
+                    android:layout_height="151dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

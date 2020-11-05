@@ -101,11 +101,6 @@ class ActivityActualizar : AppCompatActivity() {
 
         })
 
-        val click_atras = findViewById(R.id.atras_agregar) as ImageView
-        click_atras.setOnClickListener {
-            val intento1 = Intent(this, MisProductos::class.java)
-            startActivity(intento1)
-        }
 
         //Parte Imagen
         editUrl.setEnabled(false)

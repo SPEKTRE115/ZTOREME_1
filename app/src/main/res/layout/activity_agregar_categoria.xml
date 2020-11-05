@@ -23,7 +23,7 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar2"
-                    android:layout_width="308dp"
+                    android:layout_width="279dp"
                     android:layout_height="match_parent"
                     android:background="#FFFFFF"
                     android:gravity="center_horizontal|center_vertical"
