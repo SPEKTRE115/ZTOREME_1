@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.example.ztoreme_1.MainActivity
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
 import kotlinx.android.synthetic.main.activity_detalle_producto.*
@@ -54,7 +55,6 @@ class DetalleProducto : AppCompatActivity() {
                 Toast.makeText(context, "Producto eliminado", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MisProductos::class.java)
                 startActivity(intent)
-                finish()
             })
 
             builder.setNegativeButton("Cancelar", { dialogInterface: DialogInterface, i: Int -> })
@@ -170,6 +170,11 @@ class DetalleProducto : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MisProductos::class.java)
+        startActivity(intent)
     }
 
 

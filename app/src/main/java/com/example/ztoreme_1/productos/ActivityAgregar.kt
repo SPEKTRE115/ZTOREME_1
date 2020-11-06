@@ -40,6 +40,9 @@ class ActivityAgregar : AppCompatActivity() {
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista)
             spinner_categorias.adapter = adapter
         }
+        if (lista.isEmpty()){
+            db.insertarCategoria(Categoria("Sin Categoría"))
+        }
 
         spinner_categorias.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
@@ -49,7 +52,7 @@ class ActivityAgregar : AppCompatActivity() {
 
             //Cambiar para cuando se tenga la base predeterminada
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                categoria = "Holi"
+                categoria = "Sin Categoría"
             }
         }
 
@@ -85,12 +88,9 @@ class ActivityAgregar : AppCompatActivity() {
 
         btnGuardar.setOnClickListener({
             if (!editTextProd.text.isNullOrEmpty() && editTextProd.text.toString().length < 50 &&
-                !editNumCantidad.text.isNullOrEmpty() &&
-                !editstockMax.text.isNullOrEmpty() &&
-                !editstockMin.text.isNullOrEmpty() &&
-                !editprecioCompra.text.isNullOrEmpty() &&
-                !editprecioVenta.text.isNullOrEmpty()
-            ) {
+                validarCantidad() &&
+                validarStocks() &&
+                validarPrecios()) {
 
                 /*Modal para confirmar el guardar el producto*/
                 var productoNuevo = Producto(
@@ -153,6 +153,57 @@ class ActivityAgregar : AppCompatActivity() {
             }
         }
         return bandera
+    }
+
+    fun validarCantidad(): Boolean{
+        if (editNumCantidad.text.toString().isNullOrEmpty()) {
+            Toast.makeText(this, "La cantidad no puede estar vacía", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (!validarStocks()){
+            return false
+        }
+        if ((editNumCantidad.text.toString()).toInt() > (editstockMax.text.toString()).toInt()) {
+            Toast.makeText(this, "La cantidad no puede ser mayor al stock máximo", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if ((editNumCantidad.text.toString()).toInt() <= 0) {
+            Toast.makeText(this, "La cantidad no puede ser menor a 1", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    fun validarStocks(): Boolean{
+        if (editstockMax.text.toString().isNullOrEmpty() || editstockMin.text.toString().isNullOrEmpty()) {
+            Toast.makeText(this, "Los stocks no pueden estar vacíos", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if ((editstockMax.text.toString()).toInt() < (editstockMin.text.toString()).toInt()) {
+            Toast.makeText(this, "El stock máximo no puede ser menor al stock mínimo", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if ((editstockMax.text.toString()).toInt() <= 0 || (editstockMin.text.toString()).toInt() <= 0) {
+            Toast.makeText(this, "Los stocks no pueden ser menores a 1", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    fun validarPrecios(): Boolean{
+        if (editprecioCompra.text.toString().isNullOrEmpty() || editprecioVenta.text.toString().isNullOrEmpty()) {
+            Toast.makeText(this, "Los precios no pueden estar vacíos", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if ((editprecioCompra.text.toString()).toInt() > (editprecioVenta.text.toString()).toInt()) {
+            Toast.makeText(this, "El precio de venta no puede ser menor al de compra", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if ((editprecioVenta.text.toString()).toInt() <= 0 || (editprecioCompra.text.toString()).toInt() <= 0) {
+            Toast.makeText(this, "Los precios no pueden ser menores a 1", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {       super.onActivityResult(requestCode, resultCode, data)

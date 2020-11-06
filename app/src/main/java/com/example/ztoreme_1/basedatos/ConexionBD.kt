@@ -72,6 +72,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         cv.put("PRECIO_VENTA", producto.precioVenta)
         cv.put("FECHA_REGISTRO", getFechaRegistro())
         var result = db.insert("PRODUCTOS",null, cv)
+        db.close()
     }
 
     fun asociarCategoria(nombreP : String, nombreC : String){
@@ -89,6 +90,8 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
             cv.put("ID_CATEGORIA", resultado2.getString(resultado2.getColumnIndex("ID_CATEGORIA")).toInt())
         }
         var result = db.insert("CATEGORIAS_PRODUCTOS", null, cv)
+        db.close()
+        db2.close()
     }
 
     fun actualizarCategoria(nombreP: String, nombreC: String){
@@ -107,6 +110,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
             cv.put("ID_CATEGORIA", resultado2.getString(resultado2.getColumnIndex("ID_CATEGORIA")).toInt())
         }
         db.update("CATEGORIAS_PRODUCTOS", cv, "ID_PRODUCTO = ?", Array(1){ayuda})
+        db.close()
     }
 
     fun actualizarProducto(producto: Producto, nombreP: String){
@@ -223,6 +227,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         var cv = ContentValues()
         cv.put("NOMBRE", categoria.nombreCategoria)
         var result = db.insert("CATEGORIAS",null,cv)
+        db.close()
     }
 
     fun extraerCategorias() : MutableList<Categoria>{

@@ -17,7 +17,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ztoreme_1.basedatos.DataBaseHandler
 import com.example.ztoreme_1.categorias.ActivityAgregarCategoria
+import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.notificaciones.NotificationUtils
 import com.example.ztoreme_1.productos.ActivityAgregar
 import com.example.ztoreme_1.productos.MisProductos
@@ -45,6 +47,16 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val context = this
+        var db = DataBaseHandler(context)
+        val lista  = arrayListOf<String>()
+        var datos = db.extraerCategorias()
+
+        for (i in datos){
+            lista.add(i.nombreCategoria)
+        }
+        if (lista.isEmpty()){
+            db.insertarCategoria(Categoria("Sin Categoría"))
+        }
 
         if (!mNotified) {
             NotificationUtils().setNotification(mNotificationTime, this@MainActivity)
