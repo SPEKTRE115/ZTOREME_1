@@ -195,11 +195,11 @@ class ActivityAgregar : AppCompatActivity() {
             Toast.makeText(this, "Los precios no pueden estar vacíos", Toast.LENGTH_SHORT).show()
             return false
         }
-        if ((editprecioCompra.text.toString()).toInt() > (editprecioVenta.text.toString()).toInt()) {
+        if ((editprecioCompra.text.toString()).toDouble() > (editprecioVenta.text.toString()).toDouble()) {
             Toast.makeText(this, "El precio de venta no puede ser menor al de compra", Toast.LENGTH_SHORT).show()
             return false
         }
-        if ((editprecioVenta.text.toString()).toInt() <= 0 || (editprecioCompra.text.toString()).toInt() <= 0) {
+        if ((editprecioVenta.text.toString()).toDouble() <= 0.0 || (editprecioCompra.text.toString()).toDouble() <= 0) {
             Toast.makeText(this, "Los precios no pueden ser menores a 1", Toast.LENGTH_SHORT).show()
             return false
         }
