@@ -230,6 +230,20 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.close()
     }
 
+    fun actualizarCategorias(categoria: Categoria, nombreCN: String){
+        val db = this.writableDatabase
+        var cv = ContentValues()
+        cv.put("NOMBRE", categoria.nombreCategoria)
+        db.update("CATEGORIAS", cv, "NOMBRE =?", Array(1){nombreCN})
+        db.close()
+    }
+
+    fun eliminarCategoria(nombreC: String){
+        val db = this.writableDatabase
+        db.delete("CATEGORIAS", "NOMBRE = '"+nombreC+"'",null)
+        db.close()
+    }
+
     fun extraerCategorias() : MutableList<Categoria>{
         var lista : MutableList<Categoria> = ArrayList()
 
