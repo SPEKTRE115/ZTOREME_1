@@ -29,9 +29,11 @@ import com.itextpdf.text.Document
 import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_movimiento.view.*
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
+import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.system.exitProcess
@@ -144,16 +146,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun savePdf() {
+        val context = this
+        val db = DataBaseHandler(context)
+        var lista_movimientos = db.extraerMovimientos()
         val mDoc = Document()
         val mFileName = SimpleDateFormat("yyyyMMdd_HHmmss",Locale.getDefault()).format(System.currentTimeMillis())
         val mFilePath = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()+"/"+mFileName+".pdf"
-        //val path = MediaStore.Files.getContentUri("external").toString()
+
 
         try {
             PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
             mDoc.open()
             mDoc.addAuthor("ZTORE ME")
-            mDoc.add(Paragraph("Prueba Final"))
+            mDoc.add(Paragraph("Mis movimietos mensuales"))
+            for(i in lista_movimientos){
+                val movimiento = Movimiento(i.fechaRegistro, i.idProducto, i.cantidadMov, i.entrada)
+
+                if(!verificaFecha(movimiento.fechaRegistro)){
+
+                    if(movimiento.entrada == 1){
+                        var nombre_producto = db.extraerNombreProductoPorMovimiento(movimiento.idProducto)
+                        var cantidad_movi = movimiento.cantidadMov.toString() + " entradas"
+                        var fecha_movi = movimiento.fechaRegistro
+                        mDoc.add(Paragraph(nombre_producto))
+                        mDoc.add(Paragraph(cantidad_movi))
+                        mDoc.add(Paragraph(fecha_movi))
+                    }else{
+                        var nombre_producto = db.extraerNombreProductoPorMovimiento(movimiento.idProducto)
+                        var cantidad_movi = movimiento.cantidadMov.toString() + " salidas"
+                        var fecha_movi = movimiento.fechaRegistro
+                        mDoc.add(Paragraph(nombre_producto))
+                        mDoc.add(Paragraph(cantidad_movi))
+                        mDoc.add(Paragraph(fecha_movi))
+                    }
+                }
+            }
+
             mDoc.close()
             Toast.makeText(this, "$mFileName.pdf guardado en \n$mFilePath",Toast.LENGTH_LONG).show()
 
@@ -161,6 +189,20 @@ class MainActivity : AppCompatActivity() {
             println("Entro en el error"+e)
             Toast.makeText(this, "No se pudo guardar tu archivo", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun verificaFecha(fechaProducto:String): Boolean{
+
+        var fecha_hora = fechaProducto.split(" ")
+        var fecha = fecha_hora[0].split("/")
+        val calendario = Calendar.getInstance()
+        var dia = SimpleDateFormat("d").format(calendario.time)
+        var mes = SimpleDateFormat("M").format(calendario.time)
+
+        if(parseInt(dia) == parseInt(fecha[0]) && (parseInt(fecha[1])+1) == parseInt(mes)){
+            return true
+        }
+        return false
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,grantResults: IntArray) {
