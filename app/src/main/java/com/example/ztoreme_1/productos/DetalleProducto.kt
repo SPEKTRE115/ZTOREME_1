@@ -16,9 +16,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.ztoreme_1.MainActivity
+import com.example.ztoreme_1.Movimiento
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
 import kotlinx.android.synthetic.main.activity_detalle_producto.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class DetalleProducto : AppCompatActivity() {
@@ -46,11 +51,13 @@ class DetalleProducto : AppCompatActivity() {
 
         btn_borrar_producto.setOnClickListener({
             builder.setTitle("Confirmacion")
-            builder.setMessage("¿Estas seguro de eliminar el producto" + producto.nombreProducto + "?")
+            builder.setMessage("¿Estas seguro de eliminar el producto" + producto.nombreProducto + "?\n" + "Si borras este producto también se borrarán sus movimientos.")
 
             builder.setPositiveButton("Eliminar", { dialogInterface: DialogInterface, i: Int ->
 
                 var db = DataBaseHandler(context)
+                var id_prod = db.extraerIdPorNombreProducto(producto.nombreProducto)
+                db.borrarMovimientos(id_prod)
                 db.borrarProducto(producto.nombreProducto)
                 Toast.makeText(context, "Producto eliminado", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MisProductos::class.java)
@@ -98,6 +105,11 @@ class DetalleProducto : AppCompatActivity() {
                             } else {
                                 var db = DataBaseHandler(context)
                                 db.disminuirStockProducto(producto.nombreProducto, cantidad)
+                                val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss a")
+                                val fechaActual = sdf.format(Date())
+                                var id_prod = db.extraerIdPorNombreProducto(producto.nombreProducto)
+                                var nuevoMovimiento = Movimiento(fechaActual,id_prod,cantidad,0)
+                                db.insertarMovimiento(nuevoMovimiento)
                                 Toast.makeText(context, "Producto modificado", Toast.LENGTH_SHORT)
                                     .show()
                                 val intent = Intent(this, MisProductos::class.java)
@@ -153,6 +165,12 @@ class DetalleProducto : AppCompatActivity() {
                     } else {
                         var db = DataBaseHandler(context)
                         db.aumentarStockProducto(producto.nombreProducto, cantidad)
+                        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss a")
+                        val fechaActual = sdf.format(Date())
+                        println(producto.idProducto)
+                        var id_prod = db.extraerIdPorNombreProducto(producto.nombreProducto)
+                        var nuevoMovimiento = Movimiento(fechaActual,id_prod,cantidad,1)
+                        db.insertarMovimiento(nuevoMovimiento)
                         Toast.makeText(context, "Producto modificado", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MisProductos::class.java)
                         startActivity(intent)

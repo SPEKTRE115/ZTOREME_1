@@ -140,7 +140,7 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         cv.put("ID_PRODUCTO", movimiento.idProducto)
         cv.put("CANTIDAD_MOV", movimiento.cantidadMov)
         cv.put("ENTRADA", movimiento.entrada)
-        var result = db.insert("MOVIMIENTOS",null, cv)
+        db.insert("MOVIMIENTOS",null, cv)
     }
 
     fun extraerProductos() : MutableList<Producto>{
@@ -198,6 +198,70 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    fun extraerMovimientos() : MutableList<Movimiento>{
+        var lista : MutableList<Movimiento> = ArrayList()
+        val db = this.readableDatabase
+        val query = "SELECT * FROM MOVIMIENTOS"
+        val result = db.rawQuery(query, null)
+        if(result.moveToLast()){
+            do {
+                var movimiento = Movimiento()
+                movimiento.idProducto = result.getString(result.getColumnIndex("ID_PRODUCTO")).toInt()
+                movimiento.cantidadMov = result.getString(result.getColumnIndex("CANTIDAD_MOV")).toInt()
+                movimiento.entrada = result.getString(result.getColumnIndex("ENTRADA")).toInt()
+                movimiento.fechaRegistro = result.getString(result.getColumnIndex("FECHA_REGISTRO")).toString()
+                lista.add(movimiento)
+            } while (result.moveToPrevious())
+        }
+        result.close()
+        db.close()
+        return lista
+    }
+
+    fun extraerNombreProductoPorMovimiento(id:Int) : String{
+        var nombre_producto= id.toString()
+        println(id)
+        val db = this.readableDatabase
+        val query = "SELECT * FROM PRODUCTOS"
+        val result = db.rawQuery(query, null)
+        if(result.moveToFirst()){
+            do {
+                var producto = Producto()
+                producto.idProducto = result.getString(result.getColumnIndex("ID_PRODUCTO")).toInt()
+                producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
+                if(id == producto.idProducto){
+                    nombre_producto = producto.nombreProducto
+                    println("ENTRAAAAAAAAAAAAAAAAAAAA")
+                }
+            } while (result.moveToNext())
+        }
+        result.close()
+        db.close()
+        return nombre_producto
+    }
+
+
+    fun extraerIdPorNombreProducto(nombre: String) : Int{
+        var id= 0
+        val db = this.readableDatabase
+        val query = "SELECT * FROM PRODUCTOS"
+        val result = db.rawQuery(query, null)
+        if(result.moveToFirst()){
+            do {
+                var producto = Producto()
+                producto.idProducto = result.getString(result.getColumnIndex("ID_PRODUCTO")).toInt()
+                producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
+                if(nombre == producto.nombreProducto){
+                    id = producto.idProducto
+                    println("ENTRAAAAAAAAAAAAAAAAAAAA")
+                }
+            } while (result.moveToNext())
+        }
+        result.close()
+        db.close()
+        return id
+    }
+
     fun extraeNom() : MutableList<Producto>{
         var lista : MutableList<Producto> = ArrayList()
         val db = this.readableDatabase
@@ -219,6 +283,13 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         val db = this.writableDatabase
         //db.execSQL("DELETE FROM PRODUCTOS WHERE NOMBRE="+nombre)
         db.delete("PRODUCTOS","NOMBRE = '" +nombre + "'",null)
+        db.close()
+    }
+
+    fun borrarMovimientos(id : Int){
+        val db = this.writableDatabase
+        //db.execSQL("DELETE FROM PRODUCTOS WHERE NOMBRE="+nombre)
+        db.delete("MOVIMIENTOS","ID_PRODUCTO = '" +id + "'",null)
         db.close()
     }
 
