@@ -12,6 +12,7 @@ import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.MainActivity
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
+import com.example.ztoreme_1.notificaciones.NotificationUtils
 import kotlinx.android.synthetic.main.activity_actualizar.*
 import kotlinx.android.synthetic.main.activity_agregar.*
 import kotlinx.android.synthetic.main.activity_agregar.BtnImagen
@@ -26,11 +27,13 @@ import kotlinx.android.synthetic.main.activity_agregar.editprecioVenta
 import kotlinx.android.synthetic.main.activity_agregar.editstockMax
 import kotlinx.android.synthetic.main.activity_agregar.editstockMin
 import kotlinx.android.synthetic.main.activity_agregar.spinner
+import java.util.*
 
 @Suppress("MoveLambdaOutsideParentheses")
 class ActivityActualizar : AppCompatActivity() {
     private val pickImage = 100
     private var categoria = ""
+    private val mNotificationTime = Calendar.getInstance().timeInMillis + 60000
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -143,6 +146,7 @@ class ActivityActualizar : AppCompatActivity() {
                             Toast.makeText(context, "Producto actualizado", Toast.LENGTH_SHORT).show()
                             db.actualizarCategoria(editTextProd.text.toString(), categoria)
                             finish()
+                            verificaStockMinimo()
                         })
 
                     builder.setNegativeButton("Cancelar",
@@ -166,6 +170,22 @@ class ActivityActualizar : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent(this, MisProductos::class.java)
         startActivity(intent)
+    }
+
+    fun verificaStockMinimo(){
+        val context = this
+        val db = DataBaseHandler(context)
+        val lista : MutableList<Producto> = db.extraerProductos()
+        for (producto in lista){
+            val stockMinimo = producto.stockMinimo
+            val stockActual = producto.cantidadActual
+            if((stockMinimo + 3) > stockActual ){ //verifica si el stock actual se está aproximando al stock minimo
+                val titulo = "Tus productos se agotan"
+                val mensaje = "Hay productos en tu inventario que estan llegando  a los niveles de stock minimo " +
+                        "que tu definiste, hechale un vistazo."
+                NotificationUtils().setNotification(mNotificationTime, this@ActivityActualizar, titulo, mensaje)
+            }
+        }
     }
 
 }

@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private val mNotificationTime = Calendar.getInstance().timeInMillis + 60000
     private var dosvecesAtras = false
 
-
     @RequiresApi(Build.VERSION_CODES.M)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,19 +117,23 @@ class MainActivity : AppCompatActivity() {
         val lista : MutableList<Producto> = db.extraerProductos()
         for (producto in lista){
             var fechaProducto = producto.fechaRegistro
-            var splitFechaHora = fechaProducto.split(" ")
-            var splitFecha = splitFechaHora[0].split("/")
-            var splitHora = splitFechaHora[1].split(":")
-            val calendario = Calendar.getInstance()
-            val minuto = SimpleDateFormat("mm").format(calendario.time)
-            println(splitHora)
-            println(minuto)
-            if( parseInt(splitHora[1]) == parseInt(minuto)){ //para ejemplificar se hace la comparacion en minutos
-                NotificationUtils().setNotification(mNotificationTime, this@MainActivity)
+            if(verificaFecha(fechaProducto)){
+                val titulo = "Tienes productos antiguos"
+                val mensaje = "Hay productos en tu inventario que llevan mucho tiempo almacenados, hecha un vistazo."
+                NotificationUtils().setNotification(mNotificationTime, this@MainActivity, titulo, mensaje)
             }
         }
     }
 
-
-
+    fun verificaFecha(fechaProducto : String) : Boolean{
+        var splitFechaHora = fechaProducto.split(" ")
+        var splitFecha = splitFechaHora[0].split("/")
+        val calendario = Calendar.getInstance()
+        val dia = SimpleDateFormat("d").format(calendario.time)
+        val mes = SimpleDateFormat("M").format(calendario.time)
+        if (parseInt(dia) == parseInt(splitFecha[0]) && (parseInt(splitFecha[1])+1) == parseInt(mes)) {
+            return true
+        }
+        return false
+    }
 }

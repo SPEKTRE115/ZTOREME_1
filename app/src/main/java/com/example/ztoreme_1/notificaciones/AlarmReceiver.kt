@@ -9,6 +9,8 @@ class AlarmReceiver : BroadcastReceiver() {
         val service = Intent(context, NotificationService::class.java)
         service.putExtra("reason", intent.getStringExtra("reason"))
         service.putExtra("timestamp", intent.getLongExtra("timestamp", 0))
+        service.putExtra("titulo", intent.getStringExtra("titulo"))
+        service.putExtra("mensaje", intent.getStringExtra("mensaje"))
         context.startService(service)
     }
 }
