@@ -9,7 +9,9 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -23,6 +25,14 @@ import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.notificaciones.NotificationUtils
 import com.example.ztoreme_1.productos.ActivityAgregar
 import com.example.ztoreme_1.productos.MisProductos
+import com.itextpdf.text.Document
+import com.itextpdf.text.Paragraph
+import com.itextpdf.text.pdf.PdfWriter
+import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -32,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private val mNotificationTime = Calendar.getInstance().timeInMillis + 10000 //Set after 5 seconds from the current time.
     private var mNotified = false
     private var dosvecesAtras = false
+    private val STORAGE_CODE : Int = 100;
     /*lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel: NotificationChannel
     lateinit var  builder : Notification.Builder
@@ -104,6 +115,52 @@ class MainActivity : AppCompatActivity() {
             startActivity(intento1)
         }
 
+
+        btn_generarPDF.setOnClickListener{
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                    val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    requestPermissions(permissions, STORAGE_CODE)
+                }else{
+                    savePdf()
+                }
+            }else{
+                savePdf()
+            }
+        }
+
+    }
+
+    private fun savePdf() {
+        val mDoc = Document()
+        val mFileName = SimpleDateFormat("yyyyMMdd_HHmmss",Locale.getDefault()).format(System.currentTimeMillis())
+        val mFilePath = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()+"/"+mFileName+".pdf"
+        //val path = MediaStore.Files.getContentUri("external").toString()
+
+        try {
+            PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
+            mDoc.open()
+            mDoc.addAuthor("ZTORE ME")
+            mDoc.add(Paragraph("Prueba Final"))
+            mDoc.close()
+            Toast.makeText(this, "$mFileName.pdf guardado en \n$mFilePath",Toast.LENGTH_LONG).show()
+
+        }catch (e: Exception){
+            println("Entro en el error"+e)
+            Toast.makeText(this, "No se pudo guardar tu archivo", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,grantResults: IntArray) {
+        when(requestCode){
+            STORAGE_CODE -> {
+                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    //savePdf()
+                }else{
+                    Toast.makeText(this,"Permisos denegados...!", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

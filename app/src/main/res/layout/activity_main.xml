@@ -145,6 +145,12 @@
                     android:textSize="25dp" />
             </LinearLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_generarPDF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generar PDF" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
