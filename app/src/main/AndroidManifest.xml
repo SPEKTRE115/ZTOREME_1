@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/logo_ztore"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ActivityMovimientos"
+                  android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".productos.DetalleProducto"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -23,7 +25,8 @@
         <activity
             android:name=".categorias.ActivityAgregarCategoria"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".productos.ActivityActualizar"
+        <activity
+            android:name=".productos.ActivityActualizar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
@@ -36,7 +39,6 @@
             </intent-filter>
         </activity>
 
-
         <receiver
             android:name=".notificaciones.AlarmReceiver"
             android:enabled="true" />
@@ -44,8 +46,6 @@
         <service
             android:name=".notificaciones.NotificationService"
             android:enabled="true" />
-
-
     </application>
 
 </manifest>

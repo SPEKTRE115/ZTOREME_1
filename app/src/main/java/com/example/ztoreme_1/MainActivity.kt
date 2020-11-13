@@ -104,6 +104,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(intento1)
         }
 
+        val click_4 = findViewById(R.id.seccion4) as TextView
+        click_4.setOnClickListener {
+            val intento1 = Intent(this, ActivityMovimientos::class.java)
+            startActivity(intento1)
+        }
+
+        val click_4_1 = findViewById(R.id.imagen_movimientos) as ImageView
+        click_4_1.setOnClickListener {
+            val intento1 = Intent(this, ActivityMovimientos::class.java)
+            startActivity(intento1)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

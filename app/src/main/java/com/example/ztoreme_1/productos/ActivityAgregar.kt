@@ -10,9 +10,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.MainActivity
+import com.example.ztoreme_1.Movimiento
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
 import kotlinx.android.synthetic.main.activity_agregar.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Suppress("MoveLambdaOutsideParentheses")
 class ActivityAgregar : AppCompatActivity() {
@@ -122,8 +125,12 @@ class ActivityAgregar : AppCompatActivity() {
                     builder.setPositiveButton(
                         "Guardar",
                         { dialogInterface: DialogInterface, i: Int ->
-
+                            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss a")
+                            val fechaActual = sdf.format(Date())
                             db.insertarProducto(productoNuevo)
+                            var id_prod = db.extraerIdPorNombreProducto(productoNuevo.nombreProducto)
+                            var nuevoMovimiento = Movimiento(fechaActual,id_prod,productoNuevo.cantidadActual,1)
+                            db.insertarMovimiento(nuevoMovimiento)
                             Toast.makeText(context, "Producto agregado", Toast.LENGTH_SHORT).show()
                             db.asociarCategoria(editTextProd.text.toString(), categoria)
                             finish()
