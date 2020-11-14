@@ -179,7 +179,9 @@
             android:id="@+id/btn_generarPDF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Generar PDF" />
+            android:text="Generar reporte mensual"
+            android:backgroundTint="#ea86b6"
+            android:textColor="#fff"/>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

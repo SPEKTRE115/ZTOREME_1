@@ -1,17 +1,12 @@
 package com.example.ztoreme_1
 
 import android.Manifest
-import android.app.*
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
-import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -25,14 +20,12 @@ import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.notificaciones.NotificationUtils
 import com.example.ztoreme_1.productos.ActivityAgregar
 import com.example.ztoreme_1.productos.MisProductos
-import com.itextpdf.text.Document
-import com.itextpdf.text.Paragraph
+import com.itextpdf.text.*
+import com.itextpdf.text.pdf.PdfPCell
+import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_movimiento.view.*
-import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
 import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
 import java.util.*
@@ -149,49 +142,77 @@ class MainActivity : AppCompatActivity() {
         val context = this
         val db = DataBaseHandler(context)
         var lista_movimientos = db.extraerMovimientos()
-        val mDoc = Document()
-        val mFileName = SimpleDateFormat("yyyyMMdd_HHmmss",Locale.getDefault()).format(System.currentTimeMillis())
-        val mFilePath = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()+"/"+mFileName+".pdf"
 
+        // Creacion del documento
+        val mDoc = Document()
+
+        val mFileName = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis())
+        val mFilePath = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()+"/"+mFileName+".pdf"
 
         try {
             PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
             mDoc.open()
-            mDoc.addAuthor("ZTORE ME")
-            mDoc.add(Paragraph("Mis movimietos mensuales"))
+
+            val table = PdfPTable(3)
+
+            //Titulo del documento
+            val cell = PdfPCell(Phrase("ZTORE ME | Reporte mensual de inventario"))
+            cell.setBorder(Rectangle.NO_BORDER)
+            cell.setColspan(3)
+            cell.setBackgroundColor(BaseColor(154, 211, 188))
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER)
+            table.addCell(cell)
+
+            // Columnas
+            val cell_produc = PdfPCell(Phrase("Producto"))
+            cell_produc.setBackgroundColor(BaseColor.LIGHT_GRAY)
+            cell_produc.setHorizontalAlignment(Element.ALIGN_CENTER)
+            table.addCell(cell_produc)
+
+            val cell_movi = PdfPCell(Phrase("Movimiento"))
+            cell_movi.setBackgroundColor(BaseColor.LIGHT_GRAY)
+            cell_movi.setHorizontalAlignment(Element.ALIGN_CENTER)
+            table.addCell(cell_movi)
+
+            val cell_fecha = PdfPCell(Phrase("Fecha"))
+            cell_fecha.setBackgroundColor(BaseColor.LIGHT_GRAY)
+            cell_fecha.setHorizontalAlignment(Element.ALIGN_CENTER)
+            table.addCell(cell_fecha)
+
             for(i in lista_movimientos){
-                val movimiento = Movimiento(i.fechaRegistro, i.idProducto, i.cantidadMov, i.entrada)
+                var movimiento = Movimiento(i.fechaRegistro, i.idProducto, i.cantidadMov, i.entrada)
 
                 if(!verificaFecha(movimiento.fechaRegistro)){
-
+                    // Saber el tipo de movimiento
                     if(movimiento.entrada == 1){
                         var nombre_producto = db.extraerNombreProductoPorMovimiento(movimiento.idProducto)
                         var cantidad_movi = movimiento.cantidadMov.toString() + " entradas"
                         var fecha_movi = movimiento.fechaRegistro
-                        mDoc.add(Paragraph(nombre_producto))
-                        mDoc.add(Paragraph(cantidad_movi))
-                        mDoc.add(Paragraph(fecha_movi))
+                        table.addCell(nombre_producto)
+                        table.addCell(cantidad_movi)
+                        table.addCell(fecha_movi)
                     }else{
                         var nombre_producto = db.extraerNombreProductoPorMovimiento(movimiento.idProducto)
                         var cantidad_movi = movimiento.cantidadMov.toString() + " salidas"
                         var fecha_movi = movimiento.fechaRegistro
-                        mDoc.add(Paragraph(nombre_producto))
-                        mDoc.add(Paragraph(cantidad_movi))
-                        mDoc.add(Paragraph(fecha_movi))
+                        table.addCell(nombre_producto)
+                        table.addCell(cantidad_movi)
+                        table.addCell(fecha_movi)
                     }
                 }
             }
 
+            mDoc.add(table)
             mDoc.close()
-            Toast.makeText(this, "$mFileName.pdf guardado en \n$mFilePath",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "$mFileName.pdf guardado en \n$mFilePath", Toast.LENGTH_LONG).show()
 
         }catch (e: Exception){
-            println("Entro en el error"+e)
+            println("Entro en el error" + e)
             Toast.makeText(this, "No se pudo guardar tu archivo", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun verificaFecha(fechaProducto:String): Boolean{
+    private fun verificaFecha(fechaProducto: String): Boolean{
 
         var fecha_hora = fechaProducto.split(" ")
         var fecha = fecha_hora[0].split("/")
@@ -205,13 +226,17 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         when(requestCode){
             STORAGE_CODE -> {
-                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //savePdf()
-                }else{
-                    Toast.makeText(this,"Permisos denegados...!", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Permisos denegados...!", Toast.LENGTH_LONG).show()
                 }
             }
         }
