@@ -6,20 +6,49 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
 import com.example.ztoreme_1.MainActivity
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
 import kotlinx.android.synthetic.main.activity_agregar.btnCancelar
 import kotlinx.android.synthetic.main.activity_agregar.btnGuardar
 import kotlinx.android.synthetic.main.activity_agregar_categoria.*
+import kotlinx.android.synthetic.main.item_categoria.view.*
+
+var bandera = true
+var nombresito = ""
 
 class ActivityAgregarCategoria : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_categoria)
-        val context = this
 
         val builder = AlertDialog.Builder(this)
+        val context = this
+        val db = DataBaseHandler(context)
+
+        var adaptame = CategoriasAdapter(this, cargaCategorias())
+
+        lista_categorias.adapter = adaptame
+        lista_categorias.setOnItemClickListener{ parent, view, position, id ->
+            builder.setTitle("Opciones de: "+lista_categorias[position].nombreCategoria.text.toString())
+            builder.setMessage("¿Qué deseas hacer con esta categoría?")
+            builder.setNegativeButton("Eliminar", { dialogInterface: DialogInterface, i: Int ->
+                db.eliminarCategoria(lista_categorias[position].nombreCategoria.text.toString())
+                adaptame = CategoriasAdapter(this, cargaCategorias())
+                adaptame.notifyDataSetChanged()
+                lista_categorias.adapter = adaptame
+            })
+            builder.setPositiveButton("Editar", { dialogInterface: DialogInterface, i: Int ->
+                bandera = false
+                edit_nom_categoria.setText(lista_categorias[position].nombreCategoria.text.toString())
+                nombresito = lista_categorias[position].nombreCategoria.text.toString()
+            })
+            builder.setNeutralButton("Cancelar", { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            })
+            builder.show()
+        }
 
         btnCancelar.setOnClickListener({
 
@@ -68,11 +97,18 @@ class ActivityAgregarCategoria : AppCompatActivity() {
                     builder.setTitle("Confirmacion")
                     builder.setMessage("¿Estas seguro de guardar la nueva categoría?")
 
+                    builder.setNeutralButton(null, null)
+
                     builder.setPositiveButton(
                         "Guardar",
                         { dialogInterface: DialogInterface, i: Int ->
 
-                            db.insertarCategoria(categoriaNueva)
+                            if (bandera){
+                                db.insertarCategoria(categoriaNueva)
+                            }else{
+                                db.actualizarCategorias(categoriaNueva, nombresito)
+                                bandera = true
+                            }
                             Toast.makeText(context, "Categoría agregada", Toast.LENGTH_SHORT).show()
                             finish()
                         })
@@ -103,6 +139,21 @@ class ActivityAgregarCategoria : AppCompatActivity() {
             }
         }
         return bandera
+    }
+
+    fun cargaCategorias(): MutableList<Categoria>{
+        val context = this
+        val db = DataBaseHandler(context)
+
+        val ob_categorias = db.extraerCategorias()
+
+        val listaCategoria : MutableList<Categoria> = ArrayList()
+
+        for (i in ob_categorias){
+            val categoria = Categoria(i.nombreCategoria)
+            listaCategoria.add(categoria)
+        }
+        return listaCategoria
     }
 
 
