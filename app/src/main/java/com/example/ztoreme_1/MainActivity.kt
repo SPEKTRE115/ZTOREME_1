@@ -1,10 +1,15 @@
 package com.example.ztoreme_1
 
 import android.Manifest
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
@@ -22,7 +27,13 @@ import com.example.ztoreme_1.productos.MisProductos
 import com.example.ztoreme_1.productos.Producto
 import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
-
+import com.itextpdf.text.*
+import com.itextpdf.text.pdf.PdfPCell
+import com.itextpdf.text.pdf.PdfPTable
+import com.itextpdf.text.pdf.PdfWriter
+import kotlinx.android.synthetic.main.activity_main.*
+import java.io.FileOutputStream
+import java.lang.Integer.parseInt
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -31,6 +42,13 @@ class MainActivity : AppCompatActivity() {
 
     private val mNotificationTime = Calendar.getInstance().timeInMillis + 60000
     private var dosvecesAtras = false
+    private val STORAGE_CODE : Int = 100;
+    /*lateinit var notificationManager : NotificationManager
+    lateinit var notificationChannel: NotificationChannel
+    lateinit var  builder : Notification.Builder
+    private val channelID = "NOTIFICACION_PRODUCTO_ANTIGUO"
+    private val description = "Notifica que productos han estado" +
+            "mucho tiempo almacenados"*/
 
     @RequiresApi(Build.VERSION_CODES.M)
 
@@ -105,6 +123,113 @@ class MainActivity : AppCompatActivity() {
             startActivity(intento1)
         }
 
+
+        btn_generarPDF.setOnClickListener{
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                    val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    requestPermissions(permissions, STORAGE_CODE)
+                }else{
+                    savePdf()
+                }
+            }else{
+                savePdf()
+            }
+        }
+
+    }
+
+
+    private fun savePdf() {
+        val context = this
+        val db = DataBaseHandler(context)
+        var lista_movimientos = db.extraerMovimientos()
+
+        // Creacion del documento
+        val mDoc = Document()
+
+        val mFileName = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis())
+        val mFilePath = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()+"/"+mFileName+".pdf"
+
+        try {
+            PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
+            mDoc.open()
+
+            val table = PdfPTable(3)
+
+            //Titulo del documento
+            val cell = PdfPCell(Phrase("ZTORE ME | Reporte mensual de inventario"))
+            cell.setBorder(Rectangle.NO_BORDER)
+            cell.setColspan(3)
+            cell.setBackgroundColor(BaseColor(154, 211, 188))
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER)
+            table.addCell(cell)
+
+            // Columnas
+            val cell_produc = PdfPCell(Phrase("Producto"))
+            cell_produc.setBackgroundColor(BaseColor.LIGHT_GRAY)
+            cell_produc.setHorizontalAlignment(Element.ALIGN_CENTER)
+            table.addCell(cell_produc)
+
+            val cell_movi = PdfPCell(Phrase("Movimiento"))
+            cell_movi.setBackgroundColor(BaseColor.LIGHT_GRAY)
+            cell_movi.setHorizontalAlignment(Element.ALIGN_CENTER)
+            table.addCell(cell_movi)
+
+            val cell_fecha = PdfPCell(Phrase("Fecha"))
+            cell_fecha.setBackgroundColor(BaseColor.LIGHT_GRAY)
+            cell_fecha.setHorizontalAlignment(Element.ALIGN_CENTER)
+            table.addCell(cell_fecha)
+
+            for(i in lista_movimientos){
+                var movimiento = Movimiento(i.fechaRegistro, i.idProducto, i.cantidadMov, i.entrada)
+
+                if(!verificaFecha(movimiento.fechaRegistro)){
+                    // Saber el tipo de movimiento
+                    if(movimiento.entrada == 1){
+                        var nombre_producto = db.extraerNombreProductoPorMovimiento(movimiento.idProducto)
+                        var cantidad_movi = movimiento.cantidadMov.toString() + " entradas"
+                        var fecha_movi = movimiento.fechaRegistro
+                        table.addCell(nombre_producto)
+                        table.addCell(cantidad_movi)
+                        table.addCell(fecha_movi)
+                    }else{
+                        var nombre_producto = db.extraerNombreProductoPorMovimiento(movimiento.idProducto)
+                        var cantidad_movi = movimiento.cantidadMov.toString() + " salidas"
+                        var fecha_movi = movimiento.fechaRegistro
+                        table.addCell(nombre_producto)
+                        table.addCell(cantidad_movi)
+                        table.addCell(fecha_movi)
+                    }
+                }
+            }
+
+            mDoc.add(table)
+            mDoc.close()
+            Toast.makeText(this, "$mFileName.pdf guardado en \n$mFilePath", Toast.LENGTH_LONG).show()
+
+        }catch (e: Exception){
+            println("Entro en el error" + e)
+            Toast.makeText(this, "No se pudo guardar tu archivo", Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode){
+            STORAGE_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //savePdf()
+                } else {
+                    Toast.makeText(this, "Permisos denegados...!", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
         verificaAntiguedad()
     }
 
