@@ -13,6 +13,7 @@ class Producto : Serializable{
     var stockMaximo  : Int = 0
     var precioCompra  : Double = 0.0
     var precioVenta : Double = 0.0
+    var fechaRegistro : String = ""
 
     constructor(nombreProducto : String, imagen : String, descripcion : String, cantidadActual : Int,
                 stockMinimo : Int, stockMaximo : Int, precioCompra : Double, precioVenta : Double){

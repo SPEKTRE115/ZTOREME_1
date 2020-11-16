@@ -1,12 +1,8 @@
 package com.example.ztoreme_1
 
 import android.Manifest
-import android.app.*
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -23,21 +19,18 @@ import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.notificaciones.NotificationUtils
 import com.example.ztoreme_1.productos.ActivityAgregar
 import com.example.ztoreme_1.productos.MisProductos
+import com.example.ztoreme_1.productos.Producto
+import java.lang.Integer.parseInt
+import java.text.SimpleDateFormat
+
 import java.util.*
 import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val mNotificationTime = Calendar.getInstance().timeInMillis + 10000 //Set after 5 seconds from the current time.
-    private var mNotified = false
+    private val mNotificationTime = Calendar.getInstance().timeInMillis + 60000
     private var dosvecesAtras = false
-    /*lateinit var notificationManager : NotificationManager
-    lateinit var notificationChannel: NotificationChannel
-    lateinit var  builder : Notification.Builder
-    private val channelID = "NOTIFICACION_PRODUCTO_ANTIGUO"
-    private val description = "Notifica que productos han estado" +
-            "mucho tiempo almacenados"*/
 
     @RequiresApi(Build.VERSION_CODES.M)
 
@@ -56,10 +49,6 @@ class MainActivity : AppCompatActivity() {
         }
         if (lista.isEmpty()){
             db.insertarCategoria(Categoria("Sin Categoría"))
-        }
-
-        if (!mNotified) {
-            NotificationUtils().setNotification(mNotificationTime, this@MainActivity)
         }
 
         if  (checkSelfPermission("READ_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED){
@@ -116,6 +105,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intento1)
         }
 
+        verificaAntiguedad()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -144,4 +134,29 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed(Runnable { dosvecesAtras = false }, 2000)
     }
 
+    fun verificaAntiguedad(){
+        val context = this
+        val db = DataBaseHandler(context)
+        val lista : MutableList<Producto> = db.extraerProductos()
+        for (producto in lista){
+            var fechaProducto = producto.fechaRegistro
+            if(verificaFecha(fechaProducto)){
+                val titulo = "Tienes productos antiguos"
+                val mensaje = "Hay productos en tu inventario que llevan mucho tiempo almacenados, hecha un vistazo."
+                NotificationUtils().setNotification(mNotificationTime, this@MainActivity, titulo, mensaje)
+            }
+        }
+    }
+
+    fun verificaFecha(fechaProducto : String) : Boolean{
+        var splitFechaHora = fechaProducto.split(" ")
+        var splitFecha = splitFechaHora[0].split("/")
+        val calendario = Calendar.getInstance()
+        val dia = SimpleDateFormat("d").format(calendario.time)
+        val mes = SimpleDateFormat("M").format(calendario.time)
+        if (parseInt(dia) == parseInt(splitFecha[0]) && (parseInt(splitFecha[1])+1) == parseInt(mes)) {
+            return true
+        }
+        return false
+    }
 }

@@ -48,8 +48,8 @@ class NotificationService : IntentService("NotificationService") {
             val context = this.applicationContext
             var notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val notifyIntent = Intent(this, LauncherActivity::class.java)
-            val title = "Tienes Productos Antiguos"
-            val message = "Hay productos en tu inventario que llevan mucho tiempo almacenados, hecha un vistazo."
+            val title = intent?.getStringExtra("titulo") + ""
+            val message = intent?.getStringExtra("mensaje") + ""
             notifyIntent.putExtra("title", title)
             notifyIntent.putExtra("message", message)
             notifyIntent.putExtra("notification", true)
