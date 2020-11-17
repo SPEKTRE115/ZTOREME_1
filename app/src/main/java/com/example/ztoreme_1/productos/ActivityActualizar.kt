@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.MainActivity
+import com.example.ztoreme_1.Movimiento
 import com.example.ztoreme_1.R
 import com.example.ztoreme_1.basedatos.DataBaseHandler
 import com.example.ztoreme_1.notificaciones.NotificationUtils
@@ -27,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_agregar.editprecioVenta
 import kotlinx.android.synthetic.main.activity_agregar.editstockMax
 import kotlinx.android.synthetic.main.activity_agregar.editstockMin
 import kotlinx.android.synthetic.main.activity_agregar.spinner
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("MoveLambdaOutsideParentheses")
@@ -34,6 +36,7 @@ class ActivityActualizar : AppCompatActivity() {
     private val pickImage = 100
     private var categoria = ""
     private val mNotificationTime = Calendar.getInstance().timeInMillis + 60000
+    private var cantidadAntes = 0
 
 
 
@@ -53,6 +56,7 @@ class ActivityActualizar : AppCompatActivity() {
         editstockMax.setText(producto.stockMaximo.toString())
         editUrl.setText(producto.imagen)
 
+        cantidadAntes=producto.cantidadActual
         val builder = AlertDialog.Builder(this)
 
         //Categorias
@@ -140,6 +144,20 @@ class ActivityActualizar : AppCompatActivity() {
                             db.actualizarProducto(productoNuevo, producto.nombreProducto)
                             Toast.makeText(context, "Producto actualizado", Toast.LENGTH_SHORT).show()
                             db.actualizarCategoria(editTextProd.text.toString(), categoria)
+
+                            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss a")
+                            val fechaActual = sdf.format(Date())
+                            var id_prod = db.extraerIdPorNombreProducto(productoNuevo.nombreProducto)
+                            if(productoNuevo.cantidadActual>cantidadAntes){
+                                var nuevoMovimiento = Movimiento(fechaActual,id_prod,productoNuevo.cantidadActual-cantidadAntes,1)
+                                db.insertarMovimiento(nuevoMovimiento)
+                            }else if(productoNuevo.cantidadActual<cantidadAntes){
+                                var nuevoMovimiento = Movimiento(fechaActual,id_prod,(productoNuevo.cantidadActual-cantidadAntes)*-1,0)
+                                db.insertarMovimiento(nuevoMovimiento)
+                            }else{
+
+                            }
+
                             val intento1 = Intent(this, DetalleProducto::class.java)
                             intento1.putExtra("producto", productoNuevo)
                             startActivity(intento1)
