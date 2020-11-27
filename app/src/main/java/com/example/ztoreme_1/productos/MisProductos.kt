@@ -15,7 +15,15 @@ import com.example.ztoreme_1.basedatos.DataBaseHandler
 import com.example.ztoreme_1.categorias.Categoria
 import kotlinx.android.synthetic.main.activity_mis_productos.*
 
+/*
+Clase que se encarga de mostrar la vista del inventario
+y de invocar los métodos necesarios para mostrar el inventario.
+ */
 class MisProductos : AppCompatActivity() {
+
+    /*Método que se encarga de cargar todos los métodos y elementos visuales al iniciar
+    la activity. Además de añadir las acciones necesarias a los botones y spinners
+    que se encuentran en la activity.*/
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +84,7 @@ class MisProductos : AppCompatActivity() {
     }
 
     /**
-     * Funcion que se manda llamar cuando se necesita colocar los productos
+     * Método que se manda llamar cuando se necesita colocar los productos
      * dentro del activity
      */
     fun coloca_productos(lista_productos : MutableList<Producto>){
@@ -100,6 +108,8 @@ class MisProductos : AppCompatActivity() {
         }
     }
 
+    /*Método que se encraga de redireccionar a cierto activity al momento de
+    presiobnar el botón back de los celulares Android.*/
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

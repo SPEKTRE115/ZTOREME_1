@@ -10,10 +10,16 @@ import android.os.Build
 import com.example.ztoreme_1.R
 import java.util.*
 
+/*
+Clase que se encarga de crear la notificación y definir el tiempo en que se va
+ha notificar.
+ */
 class NotificationService : IntentService("NotificationService") {
     private lateinit var mNotification: Notification
     private val mNotificationId: Int = 1000
 
+    /*Método que crea un canal para generar la notificación. Este método solo se
+    * utiliza para versiones de android posteriores a la 8.0 .*/
     @SuppressLint("NewApi")
     private fun createChannel() {
 
@@ -37,7 +43,7 @@ class NotificationService : IntentService("NotificationService") {
         const val CHANNEL_NAME = "Productos Antiguos"
     }
 
-
+    /*Método que construye la notificación apartir de las variables que se pasaron al intent.*/
     override fun onHandleIntent(intent: Intent?) {
         createChannel()
         var timestamp: Long = 0

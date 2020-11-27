@@ -10,7 +10,15 @@ import com.example.ztoreme_1.productos.ProductosAdapter
 import kotlinx.android.synthetic.main.activity_mis_productos.*
 import kotlinx.android.synthetic.main.activity_movimientos.*
 
+
+/*
+Clase que se encarga de mostrar la vista de la sección de movimientos
+y de invocar los métodos necesarios para visualizar los movimientos.
+*/
+
 class ActivityMovimientos : AppCompatActivity() {
+    /*Método que se encarga de cargar todos los métodos y elementos visuales al iniciar
+    la activity. Además de añadir las acciones necesarias a los botones y la lista.*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movimientos)
@@ -22,7 +30,8 @@ class ActivityMovimientos : AppCompatActivity() {
         coloca_movimientos(lista_movi)
     }
 
-
+    /*Método que se encarga de colocar los movinetos en la lista
+    * que contiene esta activity.*/
     fun coloca_movimientos(lista_mov : MutableList<Movimiento>){
         val listam : MutableList<Movimiento> = ArrayList()
 
@@ -36,6 +45,8 @@ class ActivityMovimientos : AppCompatActivity() {
         lista_movimientos.adapter = adapter
     }
 
+    /*Método que se encraga de redireccionar a cierto activity al momento de
+    presiobnar el botón back de los celulares Android.*/
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.text.isDigitsOnly
 import com.example.ztoreme_1.categorias.Categoria
 import com.example.ztoreme_1.Movimiento
 import com.example.ztoreme_1.productos.Producto
@@ -16,7 +17,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 val DATABASE_NAME = "ZTOREMEDB"
-
+/*
+* Constante que crea la tabla tablaProductos en la cual se almacena todos los datos necesarios
+* para registrar un producto en el sistema.
+* */
 private const val tablaProductos = "CREATE TABLE IF NOT EXISTS PRODUCTOS  (" +
         "ID_PRODUCTO INTEGER PRIMARY KEY AUTOINCREMENT," +
         "NOMBRE TEXT," +
@@ -28,7 +32,10 @@ private const val tablaProductos = "CREATE TABLE IF NOT EXISTS PRODUCTOS  (" +
         "PRECIO_COMPRA DECIMAL(8,2)," +
         "PRECIO_VENTA DECIMAL(8,2)," +
         "FECHA_REGISTRO TEXT);"
-
+/*
+* Constante que crea la tabla tablaMovimientos en la cual se almacenan todos los movimientos internos
+* del intentario.
+* */
 private const val tablaMovimientos = "CREATE TABLE IF NOT EXISTS MOVIMIENTOS (" +
         "FECHA_REGISTRO TEXT," +
         "ID_PRODUCTO INTEGER," +
@@ -36,17 +43,27 @@ private const val tablaMovimientos = "CREATE TABLE IF NOT EXISTS MOVIMIENTOS (" 
         "ENTRADA INTEGER," +
         "FOREIGN KEY(ID_PRODUCTO) REFERENCES PRODUCTOS(ID_PRODUCTO)" +
         "PRIMARY KEY(FECHA_REGISTRO, ID_PRODUCTO))"
-
+/*
+* Constante que crea ta tabla relacionProductosCategoria en la cual almacena la relaciones que hay
+* entre un producto con una categoria.
+* */
 private const val relacionProductosCategoria = "CREATE TABLE IF NOT EXISTS CATEGORIAS_PRODUCTOS(" +
         "ID_PRODUCTO INTEGER," +
         "ID_CATEGORIA INTEGER," +
         "CONSTRAINT fk_producto FOREIGN KEY (ID_PRODUCTO) REFERENCES PRODUCTOS(ID_PRODUCTO)," +
         "CONSTRAINT fk_categoria FOREIGN KEY (ID_CATEGORIA) REFERENCES CATEGORIAS(ID_CATEGORIA));"
-
+/*
+* Constante que crea ta tabla tablaCategorias en la cual almacena las categorias que sera usadas
+* por el usuario.
+* */
 private const val tablaCategorias = "CREATE TABLE IF NOT EXISTS CATEGORIAS(" +
         "ID_CATEGORIA INTEGER PRIMARY KEY AUTOINCREMENT," +
         "NOMBRE TEXT);"
 
+/*
+* Ejecuta todas las constantes anteriormente especificadas para crear las respectivas tablas dentro
+* de la base de datos.
+* */
 class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(tablaProductos)
@@ -55,10 +72,16 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db?.execSQL(relacionProductosCategoria)
     }
 
+    /*
+    * Metodo para actualizar la base de datos.
+    * */
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
 
     }
 
+    /*
+    * Metodo para agregar productos dentro de la base de datos, haciendo uso del modelo Producto
+    * */
     fun insertarProducto(producto : Producto){
         val db = this.writableDatabase
         var cv = ContentValues()
@@ -75,6 +98,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.close()
     }
 
+    /*
+    * Metodo para colocar registros en la tabla categorias_productos.
+    * */
     fun asociarCategoria(nombreP : String, nombreC : String){
         val db = this.writableDatabase
         val db2 = this.readableDatabase
@@ -94,6 +120,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db2.close()
     }
 
+    /*
+    * Metodo que ayuda a actualizar alguna categoria especifica.
+    * */
     fun actualizarCategoria(nombreP: String, nombreC: String){
         val db = this.writableDatabase
         val db2 = this.readableDatabase
@@ -113,6 +142,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.close()
     }
 
+    /*
+    * Metodo que ayuda a actualizar los datos de un producto que ya existe en la base de datos.
+    * */
     fun actualizarProducto(producto: Producto, nombreP: String){
 
         val db = this.writableDatabase
@@ -133,6 +165,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
     }
 
 
+    /*
+    * Metodo que inserta movimientos en la tabla movimientos
+    * */
     fun insertarMovimiento(movimiento : Movimiento){
         val db = this.writableDatabase
         var cv = ContentValues()
@@ -143,6 +178,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.insert("MOVIMIENTOS",null, cv)
     }
 
+    /*
+    * Metodo que permite extrar productos de la base de datos haciendo el uso del modelo Producto.
+    * */
     fun extraerProductos() : MutableList<Producto>{
         var lista : MutableList<Producto> = ArrayList()
         val db = this.readableDatabase
@@ -169,6 +207,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    /*
+    * Metodo para extrar productos que pertenezcan a la categoria mencionada.
+    * */
     fun extraerProductosbyCategoria(categoria:String) : MutableList<Producto>{
         var lista : MutableList<Producto> = ArrayList()
 
@@ -199,6 +240,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    /*
+    * Metodo para extrar los movimientos que fueron relizados dentro del inventario.
+    * */
     fun extraerMovimientos() : MutableList<Movimiento>{
         var lista : MutableList<Movimiento> = ArrayList()
         val db = this.readableDatabase
@@ -219,6 +263,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    /*
+    * Metodo que nos permite extrar el nombre del producto cuando este
+    * */
     fun extraerNombreProductoPorMovimiento(id:Int) : String{
         var nombre_producto= id.toString()
         println(id)
@@ -232,7 +279,6 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
                 producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
                 if(id == producto.idProducto){
                     nombre_producto = producto.nombreProducto
-                    println("ENTRAAAAAAAAAAAAAAAAAAAA")
                 }
             } while (result.moveToNext())
         }
@@ -241,7 +287,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return nombre_producto
     }
 
-
+    /*
+    * Metodo para extrar el id del producto dado el nombre del producto
+    * */
     fun extraerIdPorNombreProducto(nombre: String) : Int{
         var id= 0
         val db = this.readableDatabase
@@ -254,7 +302,6 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
                 producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
                 if(nombre == producto.nombreProducto){
                     id = producto.idProducto
-                    println("ENTRAAAAAAAAAAAAAAAAAAAA")
                 }
             } while (result.moveToNext())
         }
@@ -263,6 +310,33 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return id
     }
 
+    fun extraerProductoId(id:Int) : Producto{
+        val db = this.readableDatabase
+        val query = "SELECT * FROM PRODUCTOS WHERE ID_PRODUCTO ="+id
+        val result = db.rawQuery(query, null)
+        var producto = Producto()
+
+        if(result.moveToFirst()){
+            do {
+                producto.imagen = result.getString(result.getColumnIndex("IMAGEN")).toString()
+                producto.nombreProducto = result.getString(result.getColumnIndex("NOMBRE")).toString()
+                producto.descripcion = result.getString(result.getColumnIndex("DESCRIPCION")).toString()
+                producto.cantidadActual = result.getString(result.getColumnIndex("CANTIDAD_ACTUAL")).toInt()
+                producto.stockMinimo = result.getString(result.getColumnIndex("STOCK_MINIMO")).toInt()
+                producto.stockMaximo = result.getString(result.getColumnIndex("STOCK_MAXIMO")).toInt()
+                producto.precioCompra = result.getString(result.getColumnIndex("PRECIO_COMPRA")).toDouble()
+                producto.precioVenta = result.getString(result.getColumnIndex("PRECIO_VENTA")).toDouble()
+            } while (result.moveToNext())
+        }
+        result.close()
+        db.close()
+
+        return producto
+    }
+
+    /*
+    * Metodo para extrar nombre de los productos.
+    * */
     fun extraeNom() : MutableList<Producto>{
         var lista : MutableList<Producto> = ArrayList()
         val db = this.readableDatabase
@@ -280,20 +354,27 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    /*
+    * Metodo que nos permite borrar los productos del inventario.
+    * */
     fun borrarProducto(nombre : String){
         val db = this.writableDatabase
-        //db.execSQL("DELETE FROM PRODUCTOS WHERE NOMBRE="+nombre)
         db.delete("PRODUCTOS","NOMBRE = '" +nombre + "'",null)
         db.close()
     }
 
+    /*
+    * Metodo que nos permite borrar los movimientos registrados en la base de datos.
+    * */
     fun borrarMovimientos(id : Int){
         val db = this.writableDatabase
-        //db.execSQL("DELETE FROM PRODUCTOS WHERE NOMBRE="+nombre)
         db.delete("MOVIMIENTOS","ID_PRODUCTO = '" +id + "'",null)
         db.close()
     }
 
+    /*
+    * Metodo que nos permite insertar una nueva categoria a la base de datos.
+    * */
     fun insertarCategoria(categoria : Categoria){
         val db = this.writableDatabase
         var cv = ContentValues()
@@ -302,6 +383,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.close()
     }
 
+    /*
+    * Metodo que nos permite actualizar las categorias existentes en la base de datos.
+    * */
     fun actualizarCategorias(categoria: Categoria, nombreCN: String){
         val db = this.writableDatabase
         var cv = ContentValues()
@@ -310,12 +394,18 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.close()
     }
 
+    /*
+    * Metodo que nos permite eliminar la categoria registrada en la base de datos.
+    * */
     fun eliminarCategoria(nombreC: String){
         val db = this.writableDatabase
         db.delete("CATEGORIAS", "NOMBRE = '"+nombreC+"'",null)
         db.close()
     }
 
+    /*
+    * Metodo que nos permite obtener las categorias registradas en la base de datos.
+    * */
     fun extraerCategorias() : MutableList<Categoria>{
         var lista : MutableList<Categoria> = ArrayList()
 
@@ -335,6 +425,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         return lista
     }
 
+    /*
+    * Metodo para aumentar la cantidad de stock actual de un producto registrado en la base de datos.
+    * */
     fun aumentarStockProducto(nombre: String, cantidad: Int){
         val db = this.writableDatabase
         val query = "SELECT CANTIDAD_ACTUAL FROM PRODUCTOS WHERE NOMBRE='"+nombre+"'"
@@ -348,6 +441,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.close()
     }
 
+    /*
+    * Metodo para disminuir la cantidad de stock actual de un producto registrado en la base de datos.
+    * */
     fun disminuirStockProducto(nombre: String, cantidad: Int){
         val db = this.writableDatabase
         val query = "SELECT CANTIDAD_ACTUAL FROM PRODUCTOS WHERE NOMBRE='"+nombre+"'"
@@ -361,8 +457,9 @@ class DataBaseHandler(context : Context) : SQLiteOpenHelper(context, DATABASE_NA
         db.close()
     }
 
-
-
+    /*
+    * Metodo que nos ayuda a obtener la fecha de registro para los productos.
+    * */
     fun getFechaRegistro() : String{
         val fechaRegistro = Calendar.getInstance()
         return  "${SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(fechaRegistro.time)}"

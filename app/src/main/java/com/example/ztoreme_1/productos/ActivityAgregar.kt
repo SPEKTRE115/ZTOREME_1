@@ -17,12 +17,18 @@ import kotlinx.android.synthetic.main.activity_agregar.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+/*
+Clase que se encarga de mostrar la vista de la agregación de un producto
+y de invocar los métodos necesarios para agregar un producto.
+ */
 @Suppress("MoveLambdaOutsideParentheses")
 class ActivityAgregar : AppCompatActivity() {
     private val pickImage = 100
     private var categoria = ""
 
-
+    /*Método que se encarga de cargar todos los métodos y elementos visuales al iniciar
+    la activity. Además de añadir las acciones necesarias a los botones y spinners
+    que se encuentran en la activity.*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar)
@@ -148,6 +154,8 @@ class ActivityAgregar : AppCompatActivity() {
         })
     }
 
+    /*Método que valida si el nombre del producto ha agregar
+    ya existe en la base de datos o no.*/
     fun validarNombre(nombre: String): Boolean{
         val context = this
         var bandera = false
@@ -162,6 +170,8 @@ class ActivityAgregar : AppCompatActivity() {
         return bandera
     }
 
+    /*Método que se encarga de validar si los datos de cantidad actual
+   son correctos. */
     fun validarCantidad(): Boolean{
         if (editNumCantidad.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "La cantidad no puede estar vacía", Toast.LENGTH_SHORT).show()
@@ -181,6 +191,8 @@ class ActivityAgregar : AppCompatActivity() {
         return true
     }
 
+    /*Método que se encarga de validar que los datos a insertar de
+    los campos de stock mínimo y máximo sean correctos.*/
     fun validarStocks(): Boolean{
         if (editstockMax.text.toString().isNullOrEmpty() || editstockMin.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Los stocks no pueden estar vacíos", Toast.LENGTH_SHORT).show()
@@ -197,6 +209,8 @@ class ActivityAgregar : AppCompatActivity() {
         return true
     }
 
+    /*Método que valida si los datos de los campos de precio compra y precio venta
+   sean correctos antes de insertarlos.*/
     fun validarPrecios(): Boolean{
         if (editprecioCompra.text.toString().isNullOrEmpty() || editprecioVenta.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Los precios no pueden estar vacíos", Toast.LENGTH_SHORT).show()
@@ -213,12 +227,16 @@ class ActivityAgregar : AppCompatActivity() {
         return true
     }
 
+    /*Método que se encraga de establecer el uri de la imagen en el campo
+    de imagen.*/
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {       super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == pickImage) {
             editUrl.setText(data?.dataString)
         }
     }
 
+    /*Método que se encraga de redireccionar a cierto activity al momento de
+    presiobnar el botón back de los celulares Android.*/
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

@@ -182,6 +182,14 @@
             android:text="Generar reporte mensual"
             android:backgroundTint="#ea86b6"
             android:textColor="#fff"/>
+
+        <Button
+            android:id="@+id/btn_reporte_ganancias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generar reporte ganancias"
+            android:backgroundTint="#ea86b6"
+            android:textColor="#fff"/>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
