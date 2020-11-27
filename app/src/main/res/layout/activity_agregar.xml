@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FDFCFC"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
     tools:visibility="visible">
 
     <LinearLayout
@@ -51,11 +52,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="674dp"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:focusableInTouchMode="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true">
 
             <EditText
                 android:id="@+id/editDescripcion"
@@ -65,8 +68,11 @@
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:hint="Descripción"
                 android:inputType="textPersonName"
+                android:selectAllOnFocus="false"
+                android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editprecioVenta" />
@@ -150,6 +156,7 @@
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:focusable="auto"
+                android:focusableInTouchMode="true"
                 android:hint="Nombre del producto"
                 android:inputType="textPersonName"
                 android:textColorHint="@android:color/secondary_text_dark_nodisable"

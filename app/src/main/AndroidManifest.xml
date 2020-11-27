@@ -30,6 +30,9 @@
             android:name=".productos.ActivityActualizar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ActivityReorden"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:label="@string/nombre_app"
             android:theme="@style/AppTheme.NoActionBar">

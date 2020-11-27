@@ -80,7 +80,7 @@ class MisProductos : AppCompatActivity() {
      * dentro del activity
      */
     fun coloca_productos(lista_productos : MutableList<Producto>){
-        println("Este es un mensaje desde coloca productos")
+        println("Este es un mensaje desde coloca productos")//se debe quitar el comentario
 
         val listaProduct : MutableList<Producto> = ArrayList()
 

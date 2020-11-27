@@ -123,6 +123,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(intento1)
         }
 
+        val click_5 = findViewById(R.id.imagen_reorden) as ImageView
+        click_5.setOnClickListener{
+            val intento = Intent(this, ActivityReorden::class.java)
+            startActivity(intento)
+        }
+
+        val click_5_1 = findViewById(R.id.seccion5) as TextView
+        click_5_1.setOnClickListener{
+            val intento = Intent(this, ActivityReorden::class.java)
+            startActivity(intento)
+        }
+
 
         btn_generarPDF.setOnClickListener{
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){

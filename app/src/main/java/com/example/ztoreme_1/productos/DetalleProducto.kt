@@ -94,8 +94,6 @@ class DetalleProducto : AppCompatActivity() {
                             var cantidad = (txtcantidad.text.toString()).toInt()
                             val txtcantidadactual = findViewById(R.id.stock_actual) as TextView
                             var cantidadactual = (txtcantidadactual.text.toString()).toInt()
-                            //val txtcantidadmax = findViewById(R.id.stock_actual) as TextView
-                            //var cantidadmax = (txtcantidadactual.text.toString()).toInt()
                             if ((cantidadactual - cantidad) < 0) {
                                 Toast.makeText(
                                     context,

@@ -182,6 +182,30 @@
             android:text="Generar reporte mensual"
             android:backgroundTint="#ea86b6"
             android:textColor="#fff"/>
+
+        <LinearLayout
+            android:layout_width="163dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/style_border_edit_text"
+            android:backgroundTint="#000E53"
+            android:gravity="center|top"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imagen_reorden"
+                android:layout_width="74dp"
+                android:layout_height="59dp"
+                app:srcCompat="@android:drawable/checkbox_on_background" />
+
+            <TextView
+                android:id="@+id/seccion5"
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|center"
+                android:text="Calcular Reorden"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
