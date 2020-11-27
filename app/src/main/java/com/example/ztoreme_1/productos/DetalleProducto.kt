@@ -25,8 +25,15 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
+/*
+Clase que se encarga de mostrar la vista del detalle de un producto
+y de invocar los métodos necesarios para mostrar el detalle de unproducto.
+ */
 class DetalleProducto : AppCompatActivity() {
+
+    /*Método que se encarga de cargar todos los métodos y elementos visuales al iniciar
+    la activity. Además de añadir las acciones necesarias a los botones
+    que se encuentran en la activity.*/
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         val builder = AlertDialog.Builder(this)
@@ -190,6 +197,8 @@ class DetalleProducto : AppCompatActivity() {
 
     }
 
+    /*Método que se encraga de redireccionar a cierto activity al momento de
+    presiobnar el botón back de los celulares Android.*/
     override fun onBackPressed() {
         val intent = Intent(this, MisProductos::class.java)
         startActivity(intent)
