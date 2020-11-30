@@ -29,6 +29,11 @@
         android:id="@+id/include"
         layout="@layout/content_main" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="719dp"
@@ -190,6 +195,16 @@
             android:text="Generar reporte ganancias"
             android:backgroundTint="#ea86b6"
             android:textColor="#fff"/>
+
+        <Button
+            android:id="@+id/btn_terminos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ea86b6"
+            android:text="Términos y Condiciones"
+            android:textColor="#fff" />
     </LinearLayout>
+
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

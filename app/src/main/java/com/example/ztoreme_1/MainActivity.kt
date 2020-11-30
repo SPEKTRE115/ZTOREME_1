@@ -2,6 +2,7 @@ package com.example.ztoreme_1
 
 import android.Manifest
 import android.app.*
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,6 +14,7 @@ import android.os.Environment
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -149,6 +151,15 @@ class MainActivity : AppCompatActivity() {
         val click_4_1 = findViewById(R.id.imagen_movimientos) as ImageView
         click_4_1.setOnClickListener {
             val intento1 = Intent(this, ActivityMovimientos::class.java)
+            startActivity(intento1)
+        }
+
+        /*
+        * Imagen para ver terminos y condiciones
+        * */
+        val click_5 = findViewById(R.id.btn_terminos) as Button
+        click_5.setOnClickListener {
+            val intento1 = Intent(this, ActivityTerminos::class.java)
             startActivity(intento1)
         }
 
