@@ -15,9 +15,20 @@ import kotlinx.android.synthetic.main.activity_agregar.btnGuardar
 import kotlinx.android.synthetic.main.activity_agregar_categoria.*
 import kotlinx.android.synthetic.main.item_categoria.view.*
 
+/*
+* Boleano que se encarga para determinar si es una nueva categoria o si se esta haciendo edicion
+* de la misma.
+* */
 var bandera = true
+/*
+* Nombre de la categoria.
+* */
 var nombresito = ""
 
+/*
+* Clase que nos ayuda insertar o modificar una categoria dentro de la base de datos haciendo builder para confirmar
+* la operacion a realizar validando el nombre de la categoria.
+* */
 class ActivityAgregarCategoria : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +41,12 @@ class ActivityAgregarCategoria : AppCompatActivity() {
         var adaptame = CategoriasAdapter(this, cargaCategorias())
 
         lista_categorias.adapter = adaptame
+
+        /*
+        * Metodo que se encarga de manejar las opciones al momento de seleccionar un elemento en la lista
+        * de categorias.
+        * Hace uso de un builder para confirmar la operacion.
+        * */
         lista_categorias.setOnItemClickListener{ parent, view, position, id ->
             builder.setTitle("Opciones de: "+lista_categorias[position].nombreCategoria.text.toString())
             builder.setMessage("¿Qué deseas hacer con esta categoría?")
@@ -50,6 +67,10 @@ class ActivityAgregarCategoria : AppCompatActivity() {
             builder.show()
         }
 
+        /*
+        * Boton que se encarga de cancelar la insercion de la categoria y regresa al MainActivity.
+        * Hace uso de un builder para confirmar la operacion.
+        * */
         btnCancelar.setOnClickListener({
 
             builder.setTitle("Confirmacion")
@@ -70,9 +91,11 @@ class ActivityAgregarCategoria : AppCompatActivity() {
 
         })
 
-
-
-
+        /*
+        * Boton que se encarga de crear un objeto de tipo categoria para su introduccion en la base
+        * de datos.
+        * Hace uso de un builder para confirmar la operacion.
+        * */
         btnGuardar.setOnClickListener({
             if (!edit_nom_categoria.text.isNullOrEmpty()
             ) {
@@ -127,6 +150,9 @@ class ActivityAgregarCategoria : AppCompatActivity() {
     }
 
 
+    /*
+    * Metodo que comprueba si la categoria a introducir se encuentra en la base de datos.
+    * */
     fun validarCategoria(nombre: String): Boolean{
         val context = this
         var bandera = false
@@ -141,6 +167,10 @@ class ActivityAgregarCategoria : AppCompatActivity() {
         return bandera
     }
 
+    /*
+    * Metodo que se encarga de aareglar la lista de categorias en la base de datos para ser insertado
+    * dentro del spinner.
+    * */
     fun cargaCategorias(): MutableList<Categoria>{
         val context = this
         val db = DataBaseHandler(context)
@@ -156,7 +186,9 @@ class ActivityAgregarCategoria : AppCompatActivity() {
         return listaCategoria
     }
 
-
+    /*
+    * Metodo para regresar al activity anterior.
+    * */
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

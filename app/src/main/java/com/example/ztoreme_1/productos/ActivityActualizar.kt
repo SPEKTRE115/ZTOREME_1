@@ -31,6 +31,10 @@ import kotlinx.android.synthetic.main.activity_agregar.spinner
 import java.text.SimpleDateFormat
 import java.util.*
 
+/*
+Clase que se encarga de mostrar la vista de la edición de un producto
+y de invocar los métodos necesarios para editar un producto.
+ */
 @Suppress("MoveLambdaOutsideParentheses")
 class ActivityActualizar : AppCompatActivity() {
     private val pickImage = 100
@@ -39,7 +43,9 @@ class ActivityActualizar : AppCompatActivity() {
     private var cantidadAntes = 0
 
 
-
+    /*Método que se encarga de cargar todos los métodos y elementos visuales al iniciar
+    la activity. Además de añadir las acciones necesarias a los botones y spinners
+    que se encuentran en la activity.*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actualizar)
@@ -135,39 +141,39 @@ class ActivityActualizar : AppCompatActivity() {
 
 
 
-                    builder.setTitle("Confirmacion")
-                    builder.setMessage("¿Estas seguro de actualizar el producto?")
+                builder.setTitle("Confirmacion")
+                builder.setMessage("¿Estas seguro de actualizar el producto?")
 
-                    builder.setPositiveButton(
-                        "Guardar",
-                        { dialogInterface: DialogInterface, i: Int ->
-                            db.actualizarProducto(productoNuevo, producto.nombreProducto)
-                            Toast.makeText(context, "Producto actualizado", Toast.LENGTH_SHORT).show()
-                            db.actualizarCategoria(editTextProd.text.toString(), categoria)
+                builder.setPositiveButton(
+                    "Guardar",
+                    { dialogInterface: DialogInterface, i: Int ->
+                        db.actualizarProducto(productoNuevo, producto.nombreProducto)
+                        Toast.makeText(context, "Producto actualizado", Toast.LENGTH_SHORT).show()
+                        db.actualizarCategoria(editTextProd.text.toString(), categoria)
 
-                            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss a")
-                            val fechaActual = sdf.format(Date())
-                            var id_prod = db.extraerIdPorNombreProducto(productoNuevo.nombreProducto)
-                            if(productoNuevo.cantidadActual>cantidadAntes){
-                                var nuevoMovimiento = Movimiento(fechaActual,id_prod,productoNuevo.cantidadActual-cantidadAntes,1)
-                                db.insertarMovimiento(nuevoMovimiento)
-                            }else if(productoNuevo.cantidadActual<cantidadAntes){
-                                var nuevoMovimiento = Movimiento(fechaActual,id_prod,(productoNuevo.cantidadActual-cantidadAntes)*-1,0)
-                                db.insertarMovimiento(nuevoMovimiento)
-                            }else{
+                        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss a")
+                        val fechaActual = sdf.format(Date())
+                        var id_prod = db.extraerIdPorNombreProducto(productoNuevo.nombreProducto)
+                        if(productoNuevo.cantidadActual>cantidadAntes){
+                            var nuevoMovimiento = Movimiento(fechaActual,id_prod,productoNuevo.cantidadActual-cantidadAntes,1)
+                            db.insertarMovimiento(nuevoMovimiento)
+                        }else if(productoNuevo.cantidadActual<cantidadAntes){
+                            var nuevoMovimiento = Movimiento(fechaActual,id_prod,(productoNuevo.cantidadActual-cantidadAntes)*-1,0)
+                            db.insertarMovimiento(nuevoMovimiento)
+                        }else{
 
-                            }
+                        }
 
-                            val intento1 = Intent(this, DetalleProducto::class.java)
-                            intento1.putExtra("producto", productoNuevo)
-                            startActivity(intento1)
-                            finish()
-                            verificaStockMinimo()
-                        })
+                        val intento1 = Intent(this, DetalleProducto::class.java)
+                        intento1.putExtra("producto", productoNuevo)
+                        startActivity(intento1)
+                        finish()
+                        verificaStockMinimo()
+                    })
 
-                    builder.setNegativeButton("Cancelar",
-                        { dialogInterface: DialogInterface, i: Int -> })
-                    builder.show()
+                builder.setNegativeButton("Cancelar",
+                    { dialogInterface: DialogInterface, i: Int -> })
+                builder.show()
 
 
             } else {
@@ -177,6 +183,8 @@ class ActivityActualizar : AppCompatActivity() {
         })
     }
 
+    /*Método que se encarga de validar si los datos de cantidad actual
+    son correctos. */
     fun validarCantidad(): Boolean{
         if (editNumCantidad.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "La cantidad no puede estar vacía", Toast.LENGTH_SHORT).show()
@@ -196,6 +204,8 @@ class ActivityActualizar : AppCompatActivity() {
         return true
     }
 
+    /*Método que se encarga de validar que los datos a insertar de
+    los campos de stock mínimo y máximo sean correctos.*/
     fun validarStocks(): Boolean{
         if (editstockMax.text.toString().isNullOrEmpty() || editstockMin.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Los stocks no pueden estar vacíos", Toast.LENGTH_SHORT).show()
@@ -212,6 +222,8 @@ class ActivityActualizar : AppCompatActivity() {
         return true
     }
 
+    /*Método que valida si los datos de los campos de precio compra y precio venta
+    sean correctos antes de insertarlos.*/
     fun validarPrecios(): Boolean{
         if (editprecioCompra.text.toString().isNullOrEmpty() || editprecioVenta.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Los precios no pueden estar vacíos", Toast.LENGTH_SHORT).show()
@@ -228,17 +240,23 @@ class ActivityActualizar : AppCompatActivity() {
         return true
     }
 
+    /*Método que se encraga de establecer el uri de la imagen en el campo
+    de imagen.*/
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {       super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == pickImage) {
             editUrl.setText(data?.dataString)
         }
     }
 
+    /*Método que se encraga de redireccionar a cierto activity al momento de
+    presiobnar el botón back de los celulares Android.*/
     override fun onBackPressed() {
         val intent = Intent(this, MisProductos::class.java)
         startActivity(intent)
     }
 
+    /*Método que verfica si la cantidad actual de un producto se acerca al
+    stock mínimo y si es así mostrar una notificación al usuario.*/
     fun verificaStockMinimo(){
         val context = this
         val db = DataBaseHandler(context)

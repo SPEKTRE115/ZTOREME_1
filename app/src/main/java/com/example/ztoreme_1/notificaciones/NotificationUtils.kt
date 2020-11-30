@@ -5,9 +5,11 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
 import java.util.*
-
+/*
+Clase que crea la señal que se va ha enviar al AlarmReceiver.
+ */
 class NotificationUtils {
-
+    /*Método que sirve para crear la señal.*/
     fun setNotification(timeInMilliSeconds: Long, activity: Activity, titulo : String, mensaje : String) {
 
         if (timeInMilliSeconds > 0) {

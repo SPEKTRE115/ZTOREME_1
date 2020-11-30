@@ -12,6 +12,10 @@ import kotlinx.android.synthetic.main.item_movimiento.view.nameProduct2
 import kotlinx.android.synthetic.main.item_movimiento_2.view.*
 import kotlinx.android.synthetic.main.item_producto.view.*
 
+/*
+* Adaptador para la visualizacion de los movimientos registradas en el sistema con el formato
+* mencionado.
+* */
 class MovimientosAdapter(private val mContex: Context, private val listaMovimientos: List<Movimiento>)  : ArrayAdapter<Movimiento>(mContex,0, listaMovimientos){
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
