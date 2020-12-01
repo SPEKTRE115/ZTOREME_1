@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/style_border_edit_text"
                 android:backgroundTint="#000E53"
-                android:gravity="center|top"
+                android:gravity="center|center_horizontal|top|center_vertical"
                 android:orientation="vertical">
 
                 <ImageView

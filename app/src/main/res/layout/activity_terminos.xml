@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="fill_horizontal|center_vertical"
-                android:text="Tiene derecho a rectificación de la elección que usted haya elegido acerca del consentimiento que nos haya dado respecto al almacenamiento poniéndose en contacto en (domicilio, telefono, correo electronico)."
+                android:text="Tiene derecho a rectificación de la elección que usted haya elegido acerca del consentimiento que nos haya dado respecto al almacenamiento poniéndose en contacto por comentarios en https://padlet.com/eduardoay115/r8lw14dnl8cf0u06."
                 android:textAlignment="gravity"
                 android:textColor="#040404" />
 
