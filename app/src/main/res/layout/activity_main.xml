@@ -184,27 +184,36 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="163dp"
-                android:layout_height="wrap_content"
+                android:layout_width="191dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/style_border_edit_text"
                 android:backgroundTint="#000E53"
-                android:gravity="center|center_horizontal|top|center_vertical"
-                android:orientation="vertical">
+                android:gravity="center|center_horizontal|top"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/imagen_reorden"
-                    android:layout_width="74dp"
-                    android:layout_height="59dp"
-                    app:srcCompat="@android:drawable/checkbox_on_background" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/seccion5"
-                    android:layout_width="128dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom|center"
-                    android:text="Calcular Reorden"
-                    android:textColor="#FFFFFF"
-                    android:textSize="25dp" />
+                    <ImageView
+                        android:id="@+id/imagen_reorden"
+                        android:layout_width="74dp"
+                        android:layout_height="59dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@android:drawable/checkbox_on_background" />
+
+                    <TextView
+                        android:id="@+id/seccion5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom|center"
+                        android:text="Calcular Reorden"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="25dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <Button
